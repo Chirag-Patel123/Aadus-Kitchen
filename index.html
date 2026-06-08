@@ -1710,5 +1710,48 @@ buildGallery();
 buildReviews();
 initReveal();
 </script>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+// ✏️ Replace with your actual values from Supabase → Settings → API
+const SUPABASE_URL      = 'https://YOUR_PROJECT_ID.supabase.co';
+const SUPABASE_ANON_KEY = 'your_anon_public_key_here';
+
+window.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Test connection
+const { data, error } = await window.supabase
+  .from('menu_categories').select('name').limit(1);
+if (data) console.log('✅ Supabase connected! Categories:', data);
+if (error) console.error('❌ Supabase error:', error);
+
+   // Load menu items from database
+async function loadMenu(categoryId = null) {
+  let query = window.supabase
+    .from('menu_items')
+    .select('*, menu_categories(name)')
+    .eq('is_available', true)
+    .order('display_order');
+
+  if (categoryId) query = query.eq('category_id', categoryId);
+
+  const { data: items, error } = await query;
+  if (error) { console.error(error); return; }
+
+  // Build HTML for each item
+  const menuContainer = document.getElementById('menu-grid');
+  menuContainer.innerHTML = items.map(item => `
+    <div class="menu-card">
+      <img src="${item.image_url || 'placeholder.jpg'}" alt="${item.name}">
+      <h3>${item.name}</h3>
+      <p>${item.description || ''}</p>
+      <span class="price">₹${item.discounted_price || item.price}</span>
+      <button onclick="addToCart('${item.id}', '${item.name}')">
+        Add to Cart
+      </button>
+    </div>
+  `).join('');
+}
+</script>
 </body>
 </html>
