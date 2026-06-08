@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aadu's Kitchen — Fresh Veg Chinese, Kandivali</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Clash+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
+:root{
+  --orange:#FF6B00;
+  --orange-light:#FF8C33;
+  --orange-pale:#FFF0E6;
+  --orange-pale2:#FFE8D6;
+  --bg:#FFF8F3;
+  --white:#FFFFFF;
+  --text:#222222;
+  --muted:#777777;
+  --border:#EFE7DF;
+  --shadow:rgba(0,0,0,.08);
+  --shadow-md:rgba(0,0,0,.13);
+  --r:16px;
+  --r-lg:24px;
+  --r-xl:32px;
+}
+
+/* ═══════════════════════════════════════
+   RESET
+═══════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+a{text-decoration:none;color:inherit}
+button{font-family:'Plus Jakarta Sans',sans-serif;border:none;background:none;cursor:pointer}
+img{display:block;max-width:100%;object-fit:cover}
+ul{list-style:none}
+
+/* ═══════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════ */
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
+section{padding:72px 0}
+
+/* ═══════════════════════════════════════
+   REVEAL
+═══════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-36px);transition:opacity .7s ease,transform .7s ease}
+.reveal-left.visible{opacity:1;transform:none}
+.reveal-right{opacity:0;transform:translateX(36px);transition:opacity .7s ease,transform .7s ease}
+.reveal-right.visible{opacity:1;transform:none}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  height:70px;display:flex;align-items:center;
+  transition:box-shadow .3s,background .3s,backdrop-filter .3s;
+}
+header.scrolled{
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(18px);
+  box-shadow:0 4px 24px var(--shadow);
+}
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;max-width:1200px;margin:0 auto;padding:0 32px;
+}
+/* Logo */
+.logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;color:var(--text);
+}
+.logo-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--orange);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;
+}
+.logo span{color:var(--orange)}
+.logo-sub{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);display:block;line-height:1}
+
+/* Nav */
+.nav-links{display:flex;gap:36px;align-items:center}
+.nav-links a{
+  font-size:14px;font-weight:600;color:var(--muted);
+  position:relative;padding-bottom:4px;transition:color .25s;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:50%;right:50%;
+  height:2px;background:var(--orange);border-radius:1px;
+  transition:left .3s ease,right .3s ease;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-links a:hover::after,.nav-links a.active::after{left:0;right:0}
+
+/* Header right */
+.header-right{display:flex;align-items:center;gap:10px}
+.hdr-icon{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--bg);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;transition:all .25s;
+}
+.hdr-icon:hover{background:var(--orange-pale);border-color:var(--orange);transform:scale(1.05)}
+.hdr-cart{
+  display:flex;align-items:center;gap:8px;
+  background:var(--orange);color:var(--white);
+  border-radius:50px;padding:9px 18px;
+  font-size:13px;font-weight:700;
+  transition:all .3s;position:relative;
+}
+.hdr-cart:hover{background:var(--orange-light);transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,107,0,.35)}
+.cart-dot{
+  background:var(--white);color:var(--orange);
+  border-radius:50%;width:18px;height:18px;
+  font-size:10px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:1px;transition:all .3s}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+#home{
+  padding:120px 0 60px;
+  background:var(--bg);
+  position:relative;overflow:hidden;
+}
+/* Decorative blobs */
+#home::before{
+  content:'';position:absolute;
+  width:420px;height:420px;border-radius:50%;
+  background:var(--orange-pale);
+  top:-100px;right:-80px;
+  z-index:0;
+}
+#home::after{
+  content:'';position:absolute;
+  width:200px;height:200px;border-radius:50%;
+  background:var(--orange-pale2);
+  bottom:20px;left:-60px;
+  z-index:0;
+}
+.hero-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;gap:40px;position:relative;z-index:1;
+}
+.hero-left{}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--orange-pale);border:1px solid var(--orange-pale2);
+  border-radius:50px;padding:6px 16px;
+  font-size:12px;font-weight:700;color:var(--orange);
+  letter-spacing:.5px;margin-bottom:20px;
+}
+.hero-eyebrow::before{content:'🌿';font-size:14px}
+.hero-left h1{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(36px,5vw,58px);font-weight:800;
+  line-height:1.12;letter-spacing:-.02em;margin-bottom:18px;color:var(--text);
+}
+.hero-left h1 .hl{color:var(--orange)}
+.hero-desc{font-size:15px;color:var(--muted);line-height:1.8;max-width:400px;margin-bottom:32px;font-weight:500}
+.hero-btns{display:flex;flex-direction:column;gap:12px;max-width:220px}
+.btn-orange{
+  display:flex;align-items:center;justify-content:center;
+  background:var(--orange);color:var(--white);
+  border-radius:50px;padding:14px 28px;
+  font-size:15px;font-weight:700;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.btn-orange::after{
+  content:'';position:absolute;inset:0;
+  background:rgba(255,255,255,.15);border-radius:50px;
+  transform:scale(0);transition:transform .4s ease;
+}
+.btn-orange:hover{background:var(--orange-light);transform:translateY(-4px);box-shadow:0 12px 28px rgba(255,107,0,.35)}
+.btn-orange:hover::after{transform:scale(1.5)}
+.btn-outline{
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--orange);color:var(--orange);
+  border-radius:50px;padding:13px 28px;
+  font-size:15px;font-weight:700;
+  background:transparent;transition:all .3s;
+}
+.btn-outline:hover{background:var(--orange);color:var(--white);transform:translateY(-4px);box-shadow:0 12px 28px rgba(255,107,0,.25)}
+
+/* Hero right — circular food image */
+.hero-right{display:flex;align-items:center;justify-content:center;position:relative}
+.hero-dish-wrap{position:relative;width:420px;height:420px}
+.hero-dish-bg{
+  position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle,var(--orange-pale) 60%,transparent 100%);
+  animation:pulseBg 4s ease-in-out infinite;
+}
+@keyframes pulseBg{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.hero-dish-img{
+  width:380px;height:380px;border-radius:50%;
+  object-fit:cover;
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  box-shadow:0 30px 80px rgba(255,107,0,.2),0 10px 30px rgba(0,0,0,.12);
+  animation:floatDish 6s ease-in-out infinite;
+  border:6px solid var(--white);
+  z-index:2;
+}
+@keyframes floatDish{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-18px)}}
+
+/* Floating badges on hero */
+.hero-badge{
+  position:absolute;
+  background:var(--white);border-radius:var(--r-lg);
+  padding:12px 16px;
+  box-shadow:0 8px 28px var(--shadow-md);
+  display:flex;align-items:center;gap:10px;
+  z-index:3;
+  animation:floatDish 5s ease-in-out infinite;
+}
+.hero-badge:nth-child(3){top:60px;left:-10px;animation-delay:.5s}
+.hero-badge:nth-child(4){bottom:80px;right:-10px;animation-delay:1.5s}
+.hero-badge:nth-child(5){top:50%;right:-30px;transform:translateY(-50%);animation-delay:1s}
+.hb-icon{font-size:26px}
+.hb-label{font-size:11px;color:var(--muted);font-weight:600}
+.hb-val{font-size:14px;font-weight:800;color:var(--text)}
+
+/* Steam */
+.steam-wrap{position:absolute;top:10%;left:50%;transform:translateX(-50%);z-index:4;pointer-events:none}
+.steam{
+  display:inline-block;width:6px;background:rgba(255,255,255,.5);
+  border-radius:3px;margin:0 4px;
+  animation:steamUp 2.5s ease-in-out infinite;
+}
+.steam:nth-child(1){height:30px;animation-delay:0s}
+.steam:nth-child(2){height:22px;animation-delay:.4s}
+.steam:nth-child(3){height:28px;animation-delay:.8s}
+@keyframes steamUp{0%,100%{transform:scaleY(0);opacity:0}30%{transform:scaleY(1);opacity:.6}70%{transform:scaleY(1) translateY(-10px);opacity:.3}}
+
+/* ═══════════════════════════════════════
+   FEATURES STRIP
+═══════════════════════════════════════ */
+.features-strip{padding:32px 0 48px;background:var(--bg)}
+.features-card{
+  background:var(--white);border-radius:var(--r-lg);
+  border:1px solid var(--border);
+  padding:24px 28px;
+  display:flex;gap:48px;align-items:center;
+  box-shadow:0 4px 20px var(--shadow);
+  flex-wrap:wrap;
+}
+.feat-item{
+  display:flex;align-items:center;gap:16px;flex:1;min-width:200px;
+  padding:0 24px;border-right:1px solid var(--border);
+  transition:transform .3s;
+}
+.feat-item:first-child{padding-left:0}
+.feat-item:last-child{border-right:none}
+.feat-item:hover{transform:translateY(-4px)}
+.feat-icon{
+  width:56px;height:56px;border-radius:14px;
+  background:var(--orange-pale);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;flex-shrink:0;
+  transition:transform .3s;
+}
+.feat-item:hover .feat-icon{transform:rotate(8deg) scale(1.05)}
+.feat-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:3px}
+.feat-desc{font-size:13px;color:var(--muted);font-weight:500;line-height:1.5}
+
+/* ═══════════════════════════════════════
+   SECTION HEADERS
+═══════════════════════════════════════ */
+.sec-header{margin-bottom:48px}
+.sec-header h2{font-size:clamp(26px,4vw,38px);font-weight:800;color:var(--text);line-height:1.2}
+.sec-header h2 .hl{color:var(--orange)}
+.sec-header p{font-size:14px;color:var(--muted);max-width:480px;margin-top:8px;line-height:1.7;font-weight:500}
+.sec-header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* ═══════════════════════════════════════
+   POPULAR DISHES
+═══════════════════════════════════════ */
+#popular{background:var(--bg)}
+.dishes-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+}
+.dish-card{
+  background:var(--white);border-radius:var(--r-xl);
+  border:1px solid var(--border);padding:28px 20px 20px;
+  text-align:center;transition:all .35s;
+  box-shadow:0 4px 16px var(--shadow);
+  position:relative;
+}
+.dish-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 20px 50px var(--shadow-md);
+  border-color:var(--orange-pale2);
+}
+/* Circular food image with dashed border */
+.dish-img-wrap{
+  position:relative;
+  width:160px;height:160px;margin:0 auto 18px;
+}
+.dish-dashed-ring{
+  position:absolute;inset:-8px;border-radius:50%;
+  border:2.5px dashed var(--orange);
+  opacity:0;
+  animation:none;
+  transition:opacity .3s;
+}
+.dish-card:hover .dish-dashed-ring{
+  opacity:1;
+  animation:rotateDash 6s linear infinite;
+}
+@keyframes rotateDash{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.dish-img{
+  width:160px;height:160px;border-radius:50%;
+  object-fit:cover;border:4px solid var(--white);
+  box-shadow:0 8px 24px rgba(255,107,0,.15),0 4px 10px rgba(0,0,0,.1);
+  transition:transform .4s ease;
+  position:relative;z-index:1;
+}
+.dish-card:hover .dish-img{transform:scale(1.08) rotate(3deg)}
+.dish-cat{font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.5px;margin-bottom:6px;text-transform:uppercase}
+.dish-name{font-size:17px;font-weight:800;color:var(--text);margin-bottom:6px}
+.dish-desc{font-size:12px;color:var(--muted);font-weight:500;line-height:1.55;margin-bottom:12px}
+.dish-rating{display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:14px}
+.dish-rating .stars{color:var(--orange);font-size:13px;letter-spacing:1px}
+.dish-rating span{font-size:12px;color:var(--muted);font-weight:600}
+.dish-footer{display:flex;align-items:center;justify-content:space-between}
+.dish-price{font-size:20px;font-weight:800;color:var(--text)}
+.dish-price small{font-size:12px;font-weight:500;color:var(--muted);text-decoration:line-through;display:block}
+.dish-order-btn{
+  display:flex;align-items:center;gap:6px;
+  background:var(--orange);color:var(--white);
+  border-radius:50px;padding:9px 18px;
+  font-size:13px;font-weight:700;
+  transition:all .3s;white-space:nowrap;
+}
+.dish-order-btn .arrow{transition:transform .3s}
+.dish-order-btn:hover{background:var(--orange-light);transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,107,0,.35)}
+.dish-order-btn:hover .arrow{transform:translateX(4px)}
+.dish-badge{
+  position:absolute;top:14px;right:14px;
+  background:var(--orange);color:var(--white);
+  border-radius:50px;padding:4px 12px;
+  font-size:10px;font-weight:800;letter-spacing:.5px;
+}
+.veg-mark{
+  position:absolute;top:14px;left:14px;
+  width:20px;height:20px;border-radius:5px;
+  border:2px solid #22C55E;background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+}
+.veg-dot{width:8px;height:8px;border-radius:50%;background:#22C55E}
+
+/* order now text link */
+.dish-order-link{
+  color:var(--orange);font-size:14px;font-weight:700;
+  display:inline-flex;align-items:center;gap:5px;
+  transition:all .25s;
+  margin-top:10px;
+}
+.dish-order-link:hover{gap:10px;color:var(--orange-light)}
+
+/* ═══════════════════════════════════════
+   MENU SECTION
+═══════════════════════════════════════ */
+#menu{background:var(--white)}
+.menu-tabs{display:flex;gap:8px;margin-bottom:36px;overflow-x:auto;padding-bottom:4px}
+.menu-tabs::-webkit-scrollbar{display:none}
+.menu-tab{
+  flex-shrink:0;padding:10px 22px;border-radius:50px;
+  border:1.5px solid var(--border);
+  font-size:13px;font-weight:700;color:var(--muted);
+  background:var(--white);transition:all .25s;
+}
+.menu-tab.active,.menu-tab:hover{background:var(--orange);color:var(--white);border-color:var(--orange)}
+.menu-search{
+  display:flex;align-items:center;gap:10px;
+  background:var(--bg);border:1.5px solid var(--border);
+  border-radius:50px;padding:11px 20px;
+  transition:border-color .25s;
+}
+.menu-search:focus-within{border-color:var(--orange)}
+.menu-search input{background:none;border:none;outline:none;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);min-width:180px}
+.menu-search input::placeholder{color:var(--muted)}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.menu-card{
+  background:var(--white);border-radius:var(--r-lg);
+  border:1.5px solid var(--border);padding:16px;
+  display:flex;gap:14px;align-items:center;
+  transition:all .3s;box-shadow:0 2px 12px var(--shadow);
+}
+.menu-card:hover{transform:translateY(-6px);border-color:var(--orange-pale2);box-shadow:0 14px 36px var(--shadow-md)}
+.menu-img-wrap{position:relative;flex-shrink:0}
+.menu-img{
+  width:88px;height:88px;border-radius:50%;object-fit:cover;
+  border:3px solid var(--border);
+  transition:transform .4s;
+}
+.menu-card:hover .menu-img{transform:scale(1.06)}
+.menu-veg{
+  position:absolute;bottom:2px;right:2px;
+  width:16px;height:16px;border-radius:4px;
+  background:var(--white);border:1.5px solid #22C55E;
+  display:flex;align-items:center;justify-content:center;
+}
+.menu-veg-dot{width:6px;height:6px;border-radius:50%;background:#22C55E}
+.menu-info{flex:1;min-width:0}
+.menu-cat{font-size:10px;font-weight:700;color:var(--orange);letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
+.menu-name{font-size:15px;font-weight:800;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu-desc{font-size:12px;color:var(--muted);line-height:1.5;font-weight:500;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.menu-footer{display:flex;align-items:center;justify-content:space-between}
+.menu-price{font-size:17px;font-weight:800;color:var(--text)}
+.menu-price small{font-size:11px;text-decoration:line-through;color:var(--muted);font-weight:500}
+.menu-add{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--orange);color:var(--white);
+  font-size:20px;display:flex;align-items:center;justify-content:center;
+  transition:all .25s;flex-shrink:0;
+}
+.menu-add:hover{background:var(--orange-light);transform:scale(1.12)}
+.qty-ctrl{display:flex;align-items:center;gap:4px}
+.qty-ctrl button{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--orange);color:var(--white);
+  font-size:16px;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.qty-ctrl button:hover{background:var(--orange-light)}
+.qty-num{font-size:13px;font-weight:800;min-width:20px;text-align:center;color:var(--text)}
+.menu-stars{display:flex;align-items:center;gap:3px;margin-bottom:6px}
+.menu-stars .s{color:var(--orange);font-size:12px}
+.menu-stars span{font-size:11px;color:var(--muted)}
+
+/* ═══════════════════════════════════════
+   OFFERS
+═══════════════════════════════════════ */
+#offers{background:var(--bg)}
+.offers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.offer-card{
+  border-radius:var(--r-xl);padding:30px 28px;
+  position:relative;overflow:hidden;
+  transition:all .3s;cursor:default;
+}
+.offer-card:hover{transform:scale(1.03);box-shadow:0 20px 50px rgba(255,107,0,.25)}
+.offer-card.o1{background:var(--orange)}
+.offer-card.o2{background:#FF8C33}
+.offer-card.o3{background:#E65200}
+.offer-label{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:6px}
+.offer-num{
+  font-size:56px;font-weight:800;color:var(--white);line-height:1;
+  margin-bottom:6px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.offer-title{font-size:18px;font-weight:800;color:var(--white);margin-bottom:6px}
+.offer-sub{font-size:13px;color:rgba(255,255,255,.75);margin-bottom:22px;font-weight:500}
+.offer-code-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.18);border:1.5px dashed rgba(255,255,255,.5);
+  border-radius:10px;padding:9px 18px;
+  font-size:13px;font-weight:800;color:var(--white);
+  letter-spacing:1.5px;transition:background .2s;
+}
+.offer-code-btn:hover{background:rgba(255,255,255,.3)}
+.offer-ghost{
+  position:absolute;right:-10px;bottom:-20px;
+  font-size:110px;font-weight:800;color:rgba(255,255,255,.08);
+  line-height:1;user-select:none;pointer-events:none;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+
+/* ═══════════════════════════════════════
+   DELIVERY SECTION
+═══════════════════════════════════════ */
+#delivery{background:var(--white)}
+.delivery-inner{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+/* Left: illustration area */
+.delivery-illus{
+  position:relative;
+  background:var(--orange-pale);border-radius:var(--r-xl);
+  padding:40px;display:flex;align-items:center;justify-content:center;
+  min-height:380px;overflow:hidden;
+}
+.delivery-illus::before{
+  content:'';position:absolute;
+  width:200px;height:200px;border-radius:50%;
+  background:var(--orange-pale2);
+  top:-50px;right:-40px;
+}
+.del-main-img{
+  width:280px;height:280px;border-radius:50%;
+  object-fit:cover;border:6px solid var(--white);
+  box-shadow:0 16px 48px rgba(255,107,0,.18);
+  animation:floatDish 5s ease-in-out infinite;
+  position:relative;z-index:1;
+}
+.del-badge{
+  position:absolute;background:var(--white);
+  border-radius:14px;padding:12px 16px;
+  box-shadow:0 8px 24px var(--shadow-md);
+  display:flex;align-items:center;gap:10px;z-index:2;
+  animation:floatDish 4s ease-in-out infinite;
+}
+.del-badge:nth-child(2){bottom:30px;left:10px;animation-delay:.7s}
+.del-badge:nth-child(3){top:30px;right:10px;animation-delay:1.4s}
+.db-icon{font-size:24px}
+.db-title{font-size:13px;font-weight:800;color:var(--text)}
+.db-sub{font-size:11px;color:var(--muted);font-weight:500}
+/* Right: delivery info */
+.delivery-right h2{font-size:clamp(26px,3.5vw,36px);font-weight:800;margin-bottom:14px}
+.delivery-right h2 .hl{color:var(--orange)}
+.delivery-right p{font-size:14px;color:var(--muted);line-height:1.8;font-weight:500;margin-bottom:28px}
+.del-features{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
+.del-feat{
+  display:flex;align-items:center;gap:14px;
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:14px;padding:16px 18px;
+  transition:all .3s;
+}
+.del-feat:hover{border-color:var(--orange-pale2);transform:translateX(6px)}
+.del-feat-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:var(--orange-pale);
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
+}
+.del-feat-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px}
+.del-feat-desc{font-size:12px;color:var(--muted);font-weight:500}
+/* Pincode checker */
+.del-checker{background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:22px}
+.del-checker h4{font-size:14px;font-weight:800;margin-bottom:14px;color:var(--text)}
+.del-check-row{display:flex;gap:10px}
+.del-check-row input{
+  flex:1;background:var(--white);border:1.5px solid var(--border);
+  border-radius:50px;padding:12px 18px;
+  font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;
+  outline:none;transition:border-color .25s;color:var(--text);
+}
+.del-check-row input:focus{border-color:var(--orange)}
+.del-check-row input::placeholder{color:var(--muted)}
+.del-check-btn{
+  background:var(--orange);color:var(--white);
+  border-radius:50px;padding:12px 20px;
+  font-size:13px;font-weight:700;white-space:nowrap;transition:all .25s;
+}
+.del-check-btn:hover{background:var(--orange-light);transform:translateY(-1px)}
+.del-chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.del-chip{
+  padding:5px 13px;background:var(--white);
+  border:1px solid var(--border);border-radius:50px;
+  font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;
+}
+.del-chip:hover{border-color:var(--orange);color:var(--orange)}
+.del-result{margin-top:14px;border-radius:12px;padding:16px 18px;display:none;animation:fadeUp .3s ease}
+.del-result.ok{background:#F0FFF6;border:1.5px solid #22C55E}
+.del-result.busy{background:#FFF4E6;border:1.5px solid var(--orange)}
+.del-result.no{background:#FFF0F0;border:1.5px solid #EF4444}
+.dr-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.dr-head-title{font-size:14px;font-weight:800;color:var(--text)}
+.dr-head-sub{font-size:12px;color:var(--muted)}
+.dr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.dr-item{text-align:center;background:var(--white);border-radius:10px;padding:10px 8px}
+.dr-item strong{display:block;font-size:15px;font-weight:800;color:var(--text);margin-bottom:2px}
+.dr-item span{font-size:11px;color:var(--muted);font-weight:500}
+
+/* ═══════════════════════════════════════
+   GALLERY
+═══════════════════════════════════════ */
+#gallery{background:var(--bg)}
+.gallery-grid{columns:3;gap:16px}
+.gallery-item{break-inside:avoid;margin-bottom:16px;border-radius:var(--r-lg);overflow:hidden;position:relative;cursor:pointer}
+.gallery-item img{width:100%;display:block;transition:transform .5s ease}
+.gallery-item:hover img{transform:scale(1.06)}
+.gallery-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(34,34,34,.75) 0%,transparent 55%);
+  opacity:0;transition:opacity .3s;
+  display:flex;align-items:flex-end;padding:16px;
+}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-label{font-size:14px;font-weight:800;color:var(--white)}
+
+/* ═══════════════════════════════════════
+   REVIEWS
+═══════════════════════════════════════ */
+#reviews{background:var(--white)}
+.reviews-track-wrap{overflow:hidden;position:relative}
+.reviews-track-wrap::before,.reviews-track-wrap::after{
+  content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;
+}
+.reviews-track-wrap::before{left:0;background:linear-gradient(to right,var(--white),transparent)}
+.reviews-track-wrap::after{right:0;background:linear-gradient(to left,var(--white),transparent)}
+.reviews-track{display:flex;gap:22px;animation:revScroll 32s linear infinite;width:max-content}
+.reviews-track:hover{animation-play-state:paused}
+.rev-card{
+  flex-shrink:0;width:320px;
+  background:var(--bg);border:1.5px solid var(--border);
+  border-radius:var(--r-xl);padding:26px;
+  transition:all .3s;
+}
+.rev-card:hover{transform:translateY(-8px);box-shadow:0 16px 40px var(--shadow-md);border-color:var(--orange-pale2)}
+@keyframes revScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.rev-stars{display:flex;gap:2px;margin-bottom:12px}
+.rev-stars span{color:var(--orange);font-size:15px}
+.rev-text{font-size:13px;color:var(--muted);line-height:1.75;font-weight:500;margin-bottom:18px;font-style:italic}
+.rev-author{display:flex;align-items:center;gap:12px}
+.rev-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--orange);color:var(--white);
+  font-size:15px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.rev-name{font-size:14px;font-weight:800;color:var(--text)}
+.rev-dish{font-size:12px;color:var(--muted);font-weight:500;margin-top:2px}
+
+/* ═══════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════ */
+#about{background:var(--bg)}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.about-img-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.aig-main{grid-column:span 2;border-radius:var(--r-xl);overflow:hidden}
+.aig-main img{height:280px;width:100%}
+.aig-s{border-radius:var(--r-lg);overflow:hidden}
+.aig-s img{height:160px;width:100%}
+.about-right h2{font-size:clamp(26px,3.5vw,38px);font-weight:800;margin-bottom:16px;color:var(--text)}
+.about-right h2 .hl{color:var(--orange)}
+.about-right p{font-size:14px;color:var(--muted);line-height:1.85;font-weight:500;margin-bottom:16px}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+.astat{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:18px 14px;text-align:center;
+  transition:all .3s;
+}
+.astat:hover{border-color:var(--orange-pale2);transform:translateY(-4px)}
+.astat-num{font-size:28px;font-weight:800;color:var(--orange);line-height:1;margin-bottom:4px}
+.astat-label{font-size:12px;color:var(--muted);font-weight:600}
+
+/* ═══════════════════════════════════════
+   LOCATION
+═══════════════════════════════════════ */
+#contact{background:var(--white)}
+.location-inner{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start}
+.location-map{border-radius:var(--r-xl);overflow:hidden;border:1.5px solid var(--border);box-shadow:0 8px 28px var(--shadow)}
+.location-map iframe{width:100%;height:380px;border:none}
+.location-info h2{font-size:clamp(24px,3vw,34px);font-weight:800;margin-bottom:24px;color:var(--text)}
+.location-info h2 .hl{color:var(--orange)}
+.loc-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+.loc-icon-wrap{
+  width:42px;height:42px;border-radius:12px;
+  background:var(--orange-pale);
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+  border:1px solid var(--orange-pale2);
+}
+.loc-label{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.loc-val{font-size:14px;font-weight:700;color:var(--text);line-height:1.55}
+.loc-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.loc-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  border-radius:50px;padding:12px 22px;font-size:13px;font-weight:700;
+  transition:all .3s;
+}
+.loc-btn.primary{background:var(--orange);color:var(--white)}
+.loc-btn.primary:hover{background:var(--orange-light);transform:translateY(-3px);box-shadow:0 10px 24px rgba(255,107,0,.3)}
+.loc-btn.ghost{border:1.5px solid var(--border);color:var(--text)}
+.loc-btn.ghost:hover{border-color:var(--orange);color:var(--orange)}
+.hours-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;margin-top:20px}
+.hours-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
+.hours-row:last-child{border-bottom:none}
+.hours-day{color:var(--muted);font-weight:600}
+.hours-time{font-weight:800;color:#22C55E}
+
+/* ═══════════════════════════════════════
+   CTA SECTION
+═══════════════════════════════════════ */
+.cta-section{
+  background:var(--orange);padding:72px 0;
+  position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;
+  width:400px;height:400px;border-radius:50%;
+  background:rgba(255,255,255,.07);
+  top:-100px;right:-80px;
+  animation:slowSpin 20s linear infinite;
+}
+.cta-section::after{
+  content:'';position:absolute;
+  width:250px;height:250px;border-radius:50%;
+  background:rgba(255,255,255,.05);
+  bottom:-80px;left:40px;
+  animation:slowSpin 15s linear infinite reverse;
+}
+@keyframes slowSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.cta-inner{position:relative;z-index:1;text-align:center}
+.cta-inner h2{font-size:clamp(32px,5vw,52px);font-weight:800;color:var(--white);margin-bottom:12px}
+.cta-inner p{font-size:15px;color:rgba(255,255,255,.8);max-width:480px;margin:0 auto 36px;font-weight:500;line-height:1.7}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-btn-white{
+  background:var(--white);color:var(--orange);
+  border-radius:50px;padding:15px 32px;
+  font-size:15px;font-weight:800;
+  transition:all .3s;display:inline-flex;align-items:center;gap:8px;
+}
+.cta-btn-white:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,.18)}
+.cta-btn-outline-white{
+  border:2px solid rgba(255,255,255,.6);color:var(--white);
+  border-radius:50px;padding:14px 32px;
+  font-size:15px;font-weight:700;
+  transition:all .3s;display:inline-flex;align-items:center;gap:8px;
+  background:transparent;
+}
+.cta-btn-outline-white:hover{background:rgba(255,255,255,.12);transform:translateY(-4px);border-color:var(--white)}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer{background:var(--white);border-top:1px solid var(--border)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px;padding:60px 0 40px}
+.footer-logo{font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;margin-bottom:12px}
+.footer-logo span{color:var(--orange)}
+.footer-desc{font-size:13px;color:var(--muted);line-height:1.8;max-width:240px;margin-bottom:22px;font-weight:500}
+.footer-social{display:flex;gap:10px}
+.soc{
+  width:38px;height:38px;border-radius:10px;
+  background:var(--bg);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+  transition:all .25s;
+}
+.soc:hover{background:var(--orange-pale);border-color:var(--orange-pale2);transform:scale(1.08)}
+.footer-col h5{font-size:13px;font-weight:800;color:var(--text);margin-bottom:18px;letter-spacing:.3px}
+.footer-col a{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--muted);font-weight:500;margin-bottom:12px;transition:all .25s}
+.footer-col a:hover{color:var(--orange);transform:translateX(4px)}
+.footer-bottom{
+  border-top:1px solid var(--border);padding:22px 0;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+.footer-bottom p{font-size:12px;color:var(--muted);font-weight:500}
+.footer-platforms{display:flex;gap:8px}
+.fp{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:50px;padding:5px 14px;
+  font-size:11px;font-weight:700;color:var(--muted);
+}
+
+/* ═══════════════════════════════════════
+   CART PANEL
+═══════════════════════════════════════ */
+#cart-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;backdrop-filter:blur(3px)}
+#cart-panel{
+  position:fixed;top:0;right:-480px;width:440px;height:100vh;
+  background:var(--white);z-index:801;
+  display:flex;flex-direction:column;
+  transition:right .4s cubic-bezier(.4,0,.2,1);
+  box-shadow:-8px 0 40px rgba(0,0,0,.12);
+  border-left:1px solid var(--border);
+}
+#cart-panel.open{right:0}
+.cart-head{
+  padding:24px 28px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cart-head h3{font-size:20px;font-weight:800;color:var(--text)}
+.cart-close{
+  width:36px;height:36px;border-radius:50%;background:var(--bg);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:var(--muted);transition:all .2s;
+}
+.cart-close:hover{border-color:var(--orange);color:var(--orange)}
+.cart-body{flex:1;overflow-y:auto;padding:20px 28px}
+.cart-body::-webkit-scrollbar{width:4px}
+.cart-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.cart-empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;text-align:center}
+.cart-empty-icon{font-size:60px;opacity:.35}
+.cart-empty-state p{font-size:14px;color:var(--muted);font-weight:500}
+.cart-item{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)}
+.ci-img{width:58px;height:58px;border-radius:12px;object-fit:cover;flex-shrink:0;border:1px solid var(--border)}
+.ci-info{flex:1;min-width:0}
+.ci-name{font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px}
+.ci-price{font-size:13px;font-weight:700;color:var(--orange)}
+.cart-foot{padding:20px 28px;border-top:1px solid var(--border)}
+.coupon-row{display:flex;gap:10px;margin-bottom:18px}
+.coupon-row input{
+  flex:1;background:var(--bg);border:1.5px solid var(--border);
+  border-radius:50px;padding:11px 16px;
+  font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;
+  outline:none;transition:border-color .2s;color:var(--text);
+}
+.coupon-row input:focus{border-color:var(--orange)}
+.coupon-row input::placeholder{color:var(--muted)}
+.coupon-apply{
+  background:var(--orange-pale);color:var(--orange);
+  border-radius:50px;padding:11px 18px;font-size:13px;font-weight:800;transition:all .2s;
+}
+.coupon-apply:hover{background:var(--orange);color:var(--white)}
+.cline{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:8px;font-weight:500}
+.cline.total{font-size:16px;font-weight:800;color:var(--text);border-top:1px solid var(--border);padding-top:12px;margin-top:6px}
+.checkout-btn{
+  display:block;width:100%;background:var(--orange);color:var(--white);
+  border-radius:50px;padding:16px;font-size:15px;font-weight:800;text-align:center;
+  margin-top:16px;transition:all .3s;
+}
+.checkout-btn:hover{background:var(--orange-light);transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,107,0,.3)}
+
+/* ═══════════════════════════════════════
+   TOAST
+═══════════════════════════════════════ */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(16px);
+  z-index:1000;background:var(--text);color:var(--white);
+  border-radius:50px;padding:13px 26px;font-size:14px;font-weight:700;
+  opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;
+  box-shadow:0 8px 28px rgba(0,0,0,.2);
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ═══════════════════════════════════════
+   WHATSAPP FLOAT
+═══════════════════════════════════════ */
+.wa-float{
+  position:fixed;bottom:24px;right:24px;z-index:200;
+  display:flex;align-items:center;gap:9px;
+  background:#25D366;color:var(--white);
+  border-radius:50px;padding:13px 22px;
+  font-size:14px;font-weight:700;
+  box-shadow:0 8px 28px rgba(37,211,102,.4);
+  transition:all .3s;
+}
+.wa-float:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(37,211,102,.5)}
+.wa-float svg{width:20px;height:20px;fill:var(--white);flex-shrink:0}
+
+/* ═══════════════════════════════════════
+   MOBILE NAV
+═══════════════════════════════════════ */
+.mobile-nav{
+  display:none;position:fixed;inset:0;z-index:850;
+  background:var(--white);flex-direction:column;
+  align-items:center;justify-content:center;gap:32px;
+}
+.mobile-nav.open{display:flex}
+.mobile-nav a{font-size:26px;font-weight:800;color:var(--text);transition:color .2s}
+.mobile-nav a:hover{color:var(--orange)}
+.mobile-nav-close{position:absolute;top:24px;right:28px;font-size:26px;color:var(--muted);background:none;border:none;cursor:pointer}
+
+/* ═══════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:1024px){
+  .hero-inner,.delivery-inner,.about-inner,.location-inner{grid-template-columns:1fr;gap:40px}
+  .hero-right,.delivery-illus{display:none}
+  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
+  .dishes-grid{grid-template-columns:1fr 1fr}
+  .menu-grid{grid-template-columns:1fr 1fr}
+  .offers-grid{grid-template-columns:1fr 1fr}
+  .gallery-grid{columns:2}
+}
+@media(max-width:640px){
+  .container{padding:0 16px}
+  section{padding:56px 0}
+  .nav-links,.hdr-icon:not(:last-of-type){display:none}
+  .hamburger{display:flex}
+  .dishes-grid,.menu-grid,.offers-grid{grid-template-columns:1fr}
+  .gallery-grid{columns:1}
+  .footer-top{grid-template-columns:1fr}
+  .feat-item{border-right:none;border-bottom:1px solid var(--border);padding:16px 0}
+  .feat-item:last-child{border-bottom:none}
+  .features-card{flex-direction:column;gap:0;padding:16px}
+  #cart-panel{width:100%;right:-100%}
+  .wa-float span{display:none}
+  .about-inner{grid-template-columns:1fr}
+  .about-img-grid{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
+  <a href="#home" onclick="closeMobileNav()">Home</a>
+  <a href="#menu" onclick="closeMobileNav()">Menu</a>
+  <a href="#offers" onclick="closeMobileNav()">Offers</a>
+  <a href="#delivery" onclick="closeMobileNav()">Delivery</a>
+  <a href="#about" onclick="closeMobileNav()">About</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+</div>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🍜</div>
+      <div>
+        <span>Aadu's <span>Kitchen.</span></span>
+        <span class="logo-sub">Pure Veg · Kandivali</span>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a href="#home" class="active">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#offers">Offers</a>
+      <a href="#delivery">Delivery</a>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-right">
+      <button class="hdr-icon" title="Search" onclick="document.querySelector('.menu-search input').focus();document.getElementById('menu').scrollIntoView({behavior:'smooth'})">🔍</button>
+      <button class="hdr-icon" title="Profile">👤</button>
+      <button class="hdr-cart" onclick="openCart()">
+        🛒 Cart <span class="cart-dot" id="cart-count">0</span>
+      </button>
+      <button class="hamburger" onclick="openMobileNav()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="home">
+  <div class="container">
+    <div class="hero-inner">
+      <!-- LEFT -->
+      <div class="hero-left">
+        <div class="hero-eyebrow reveal">100% Pure Vegetarian Kitchen</div>
+        <h1 class="reveal" style="transition-delay:.08s">
+          <span class="hl">Fresh Veg Chinese</span><br>
+          Delivered <span class="hl">Hot &</span><br>
+          Fast Across Kandivali
+        </h1>
+        <p class="hero-desc reveal" style="transition-delay:.18s">
+          Authentic Chinese & Sichuan cuisine, cooked from scratch every day with the freshest ingredients. No shortcuts. Just fire, wok, and love — since 2020.
+        </p>
+        <div class="hero-btns reveal" style="transition-delay:.28s">
+          <a href="#menu" class="btn-orange">Order Now</a>
+          <a href="#contact" class="btn-outline">Track Order</a>
+        </div>
+      </div>
+      <!-- RIGHT -->
+      <div class="hero-right reveal-right">
+        <div class="hero-dish-wrap">
+          <div class="hero-dish-bg"></div>
+          <!-- Steam -->
+          <div class="steam-wrap">
+            <span class="steam"></span>
+            <span class="steam"></span>
+            <span class="steam"></span>
+          </div>
+          <img class="hero-dish-img"
+            src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=700&q=85"
+            alt="Aadu's Kitchen — Signature Chinese Platter">
+          <!-- Floating badges -->
+          <div class="hero-badge">
+            <div class="hb-icon">⭐</div>
+            <div><div class="hb-val">4.5 / 5</div><div class="hb-label">Google Rating</div></div>
+          </div>
+          <div class="hero-badge">
+            <div class="hb-icon">🚴</div>
+            <div><div class="hb-val">30 Min</div><div class="hb-label">Avg. Delivery</div></div>
+          </div>
+          <div class="hero-badge">
+            <div class="hb-icon">🌿</div>
+            <div><div class="hb-val">100%</div><div class="hb-label">Pure Veg</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FEATURES STRIP ═══════ -->
+<div class="features-strip">
+  <div class="container">
+    <div class="features-card reveal">
+      <div class="feat-item">
+        <div class="feat-icon">🏎️</div>
+        <div>
+          <div class="feat-title">Fast Delivery</div>
+          <div class="feat-desc">Promise To Deliver Within 30 Mins</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">🥬</div>
+        <div>
+          <div class="feat-title">Fresh Ingredients</div>
+          <div class="feat-desc">Your Food Will Be Delivered 100% Fresh</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon">📦</div>
+        <div>
+          <div class="feat-title">Secure Packaging</div>
+          <div class="feat-desc">Tamper-Proof Seals. Always Safe.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ POPULAR DISHES ═══════ -->
+<section id="popular">
+  <div class="container">
+    <div class="sec-header-row reveal">
+      <div class="sec-header" style="margin-bottom:0">
+        <h2>Our <span class="hl">Best Delivered</span><br>Chinese Dish</h2>
+        <p>It's Not Just About Bringing You Good Food From Our Kitchen, We Deliver You Experience</p>
+      </div>
+      <a href="#menu" class="btn-orange" style="white-space:nowrap;padding:13px 26px;font-size:14px;align-self:flex-end">View All Menu</a>
+    </div>
+    <div style="height:40px"></div>
+    <div class="dishes-grid" id="dishes-grid"></div>
+  </div>
+</section>
+
+<!-- ═══════ FULL MENU ═══════ -->
+<section id="menu">
+  <div class="container">
+    <div class="sec-header-row reveal">
+      <div class="sec-header" style="margin-bottom:0">
+        <h2>Our Full <span class="hl">Menu</span></h2>
+        <p>Search and filter by category to find exactly what you're craving</p>
+      </div>
+      <div class="menu-search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Search dishes…" oninput="handleSearch(this.value)">
+      </div>
+    </div>
+    <div style="height:28px"></div>
+    <div class="menu-tabs" id="menu-tabs">
+      <button class="menu-tab active" onclick="filterCat('all',this)">All</button>
+      <button class="menu-tab" onclick="filterCat('soup',this)">🥣 Soups</button>
+      <button class="menu-tab" onclick="filterCat('starter',this)">🍢 Starters</button>
+      <button class="menu-tab" onclick="filterCat('rice',this)">🍚 Fried Rice</button>
+      <button class="menu-tab" onclick="filterCat('noodles',this)">🍜 Noodles</button>
+      <button class="menu-tab" onclick="filterCat('sizzler',this)">🫕 Sizzlers</button>
+      <button class="menu-tab" onclick="filterCat('combo',this)">🎁 Combos</button>
+    </div>
+    <div class="menu-grid" id="menu-grid"></div>
+  </div>
+</section>
+
+<!-- ═══════ OFFERS ═══════ -->
+<section id="offers">
+  <div class="container">
+    <div class="sec-header reveal">
+      <h2>Special <span class="hl">Offers</span> For You</h2>
+      <p>Exclusive deals and coupons for our valued customers. Use the code at checkout.</p>
+    </div>
+    <div class="offers-grid">
+      <div class="offer-card o1 reveal">
+        <div class="offer-label">First Order Deal</div>
+        <div class="offer-num">20%</div>
+        <div class="offer-title">OFF Everything</div>
+        <div class="offer-sub">No minimum order required · New customers only</div>
+        <button class="offer-code-btn" onclick="copyCode('AADU20')">📋 AADU20</button>
+        <div class="offer-ghost">20</div>
+      </div>
+      <div class="offer-card o2 reveal" style="transition-delay:.1s">
+        <div class="offer-label">Weekend Special</div>
+        <div class="offer-num">FREE</div>
+        <div class="offer-title">Delivery</div>
+        <div class="offer-sub">On all orders above ₹299 · Sat & Sun only</div>
+        <button class="offer-code-btn" onclick="copyCode('FREEDEL')">📋 FREEDEL</button>
+        <div class="offer-ghost">FREE</div>
+      </div>
+      <div class="offer-card o3 reveal" style="transition-delay:.2s">
+        <div class="offer-label">Combo Deal</div>
+        <div class="offer-num">₹249</div>
+        <div class="offer-title">Rice + Noodles</div>
+        <div class="offer-sub">Any rice + any noodles · Daily offer</div>
+        <button class="offer-code-btn" onclick="copyCode('COMBO249')">📋 COMBO249</button>
+        <div class="offer-ghost">DEAL</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ DELIVERY ═══════ -->
+<section id="delivery">
+  <div class="container">
+    <div class="delivery-inner">
+      <!-- LEFT ILLUSTRATION -->
+      <div class="delivery-illus reveal-left">
+        <img class="del-main-img"
+          src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&q=80"
+          alt="Delivery">
+        <div class="del-badge">
+          <div class="db-icon">⚡</div>
+          <div><div class="db-title">30 Min Delivery</div><div class="db-sub">Kandivali East & West</div></div>
+        </div>
+        <div class="del-badge">
+          <div class="db-icon">🔒</div>
+          <div><div class="db-title">Tamper-Proof</div><div class="db-sub">Sealed every time</div></div>
+        </div>
+      </div>
+      <!-- RIGHT INFO -->
+      <div class="reveal-right">
+        <div class="sec-header" style="margin-bottom:28px">
+          <h2>Fast. Fresh.<br><span class="hl">Right To Your Door.</span></h2>
+          <p>We take delivery as seriously as cooking. Real-time tracking, professional riders, and food that arrives hot — always.</p>
+        </div>
+        <div class="del-features">
+          <div class="del-feat">
+            <div class="del-feat-icon">🚴</div>
+            <div><div class="del-feat-title">30-Min Guarantee</div><div class="del-feat-desc">We promise delivery within 30 minutes or your next order gets 10% off.</div></div>
+          </div>
+          <div class="del-feat">
+            <div class="del-feat-icon">🌡️</div>
+            <div><div class="del-feat-title">Hot Food Guarantee</div><div class="del-feat-desc">Insulated delivery bags keep your food at the right temperature throughout.</div></div>
+          </div>
+          <div class="del-feat">
+            <div class="del-feat-icon">📦</div>
+            <div><div class="del-feat-title">Secure Packaging</div><div class="del-feat-desc">Tamper-proof seals on every order. If the seal is broken, don't accept it.</div></div>
+          </div>
+          <div class="del-feat">
+            <div class="del-feat-icon">📍</div>
+            <div><div class="del-feat-title">Wide Coverage</div><div class="del-feat-desc">Kandivali East & West, Thakur Village, Mahavir Nagar, Lokhandwala, Borivali.</div></div>
+          </div>
+        </div>
+        <div class="del-checker">
+          <h4>📍 Check Delivery To Your Area</h4>
+          <div class="del-check-row">
+            <input type="text" id="del-input" placeholder="Enter pincode or area (e.g. 400101)" onkeydown="if(event.key==='Enter')checkDel()">
+            <button class="del-check-btn" onclick="checkDel()">Check →</button>
+          </div>
+          <div class="del-chips">
+            <span class="del-chip" onclick="fillDel('400101')">400101</span>
+            <span class="del-chip" onclick="fillDel('400067')">400067</span>
+            <span class="del-chip" onclick="fillDel('Thakur Village')">Thakur Village</span>
+            <span class="del-chip" onclick="fillDel('Lokhandwala')">Lokhandwala</span>
+          </div>
+          <div class="del-result" id="del-result"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ GALLERY ═══════ -->
+<section id="gallery">
+  <div class="container">
+    <div class="sec-header reveal">
+      <h2>Food <span class="hl">Gallery</span></h2>
+      <p>A peek into what comes out of our kitchen every day</p>
+    </div>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</section>
+
+<!-- ═══════ REVIEWS ═══════ -->
+<section id="reviews">
+  <div class="container" style="margin-bottom:44px">
+    <div class="sec-header reveal">
+      <h2>What Kandivali <span class="hl">Says About Us</span></h2>
+      <p>Real reviews from our regular customers across Swiggy, Zomato and Google</p>
+    </div>
+  </div>
+  <div class="reviews-track-wrap">
+    <div class="reviews-track" id="reviews-track"></div>
+  </div>
+</section>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-img-grid reveal-left">
+        <div class="aig-main"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80" alt="Aadu's Kitchen"></div>
+        <div class="aig-s"><img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&q=80" alt="Soup"></div>
+        <div class="aig-s"><img src="https://images.unsplash.com/photo-1625398407796-82916b66dbe2?w=400&q=80" alt="Paneer Chilly"></div>
+      </div>
+      <div class="about-right reveal-right">
+        <div class="sec-header" style="margin-bottom:0">
+          <h2>Kandivali's Own<br><span class="hl">Chinese Kitchen.</span></h2>
+        </div>
+        <p style="margin-top:16px">Established in 2020, Aadu's Kitchen was born from one simple belief — Kandivali deserves world-class Chinese food at honest prices. We source fresh ingredients every single morning and cook every dish to order.</p>
+        <p>No frozen shortcuts. No compromises. Just the same quality we'd serve our own family — every single day.</p>
+        <div class="about-stats">
+          <div class="astat"><div class="astat-num" data-target="10000" data-suffix="+">0+</div><div class="astat-label">Orders Delivered</div></div>
+          <div class="astat"><div class="astat-num" data-target="5000" data-suffix="+">0+</div><div class="astat-label">Happy Customers</div></div>
+          <div class="astat"><div class="astat-num" data-target="4" data-suffix="+">0+</div><div class="astat-label">Years of Service</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LOCATION ═══════ -->
+<section id="contact">
+  <div class="container">
+    <div class="location-inner">
+      <div class="reveal-left">
+        <div class="location-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.8!2d72.8567323!3d19.201247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b79b179c3723%3A0x756ac400adf0f02e!2sAadu's%20Kitchen!5e0!3m2!1sen!2sin!4v1"
+            allowfullscreen loading="lazy">
+          </iframe>
+        </div>
+      </div>
+      <div class="location-info reveal-right">
+        <h2>Visit Us or <span class="hl">Order Online</span></h2>
+        <div class="loc-row">
+          <div class="loc-icon-wrap">📍</div>
+          <div>
+            <div class="loc-label">Address</div>
+            <div class="loc-val">Shop No. 1, Deejay Smruti CHS, Akurli Road,<br>opp. Thakur House, Kandivali East,<br>Mumbai – 400101</div>
+          </div>
+        </div>
+        <div class="loc-row">
+          <div class="loc-icon-wrap">📞</div>
+          <div>
+            <div class="loc-label">Phone & WhatsApp</div>
+            <div class="loc-val">+91 90825 87359</div>
+          </div>
+        </div>
+        <div class="loc-row">
+          <div class="loc-icon-wrap">🕐</div>
+          <div>
+            <div class="loc-label">Opening Hours</div>
+            <div class="loc-val">Daily: 11:00 AM – 12:00 AM</div>
+          </div>
+        </div>
+        <div class="loc-row">
+          <div class="loc-icon-wrap">📱</div>
+          <div>
+            <div class="loc-label">Order Online</div>
+            <div class="loc-val">Swiggy · Zomato · WhatsApp</div>
+          </div>
+        </div>
+        <div class="loc-btns">
+          <a href="https://maps.app.goo.gl/91gV34a1DV331BfW8" target="_blank" class="loc-btn primary">📍 Get Directions</a>
+          <a href="tel:+919082587359" class="loc-btn ghost">📞 Call Now</a>
+        </div>
+        <div class="hours-card">
+          <div class="hours-row"><span class="hours-day">Monday – Saturday</span><span class="hours-time">11:00 AM – 12:00 AM</span></div>
+          <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">11:00 AM – 11:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Public Holidays</span><span class="hours-time">11:00 AM – 11:00 PM</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CTA ═══════ -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <h2>Ready To Order?</h2>
+      <p>Hot, fresh, pure vegetarian Chinese food delivered to your door in 30 minutes. Order now and experience the difference.</p>
+      <div class="cta-btns">
+        <a href="#menu" class="cta-btn-white">🍜 Order Now</a>
+        <a href="tel:+919082587359" class="cta-btn-outline-white">📞 Call Restaurant</a>
+        <a href="#menu" class="cta-btn-outline-white">📋 View Menu</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Aadu's <span>Kitchen.</span></div>
+        <p class="footer-desc">Kandivali's favourite 100% pure vegetarian Chinese and Sichuan kitchen. Fresh, fast, and full of flavour since 2020.</p>
+        <div class="footer-social">
+          <div class="soc" title="Instagram">📸</div>
+          <div class="soc" title="Facebook">👥</div>
+          <div class="soc" title="WhatsApp">💬</div>
+          <div class="soc" title="Zomato">🍽️</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Menu</h5>
+        <a href="#menu">Soups</a>
+        <a href="#menu">Starters</a>
+        <a href="#menu">Fried Rice</a>
+        <a href="#menu">Noodles</a>
+        <a href="#menu">Sizzlers</a>
+        <a href="#menu">Combo Deals</a>
+      </div>
+      <div class="footer-col">
+        <h5>Information</h5>
+        <a href="#home">Home</a>
+        <a href="#offers">Offers</a>
+        <a href="#delivery">Delivery</a>
+        <a href="#about">About Us</a>
+        <a href="#gallery">Gallery</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a>Kandivali East, Mumbai 400101</a>
+        <a href="tel:+919082587359">+91 90825 87359</a>
+        <a href="mailto:aaduskitchen@gmail.com">aaduskitchen@gmail.com</a>
+        <a>Open: 11 AM – 12 AM</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Aadu's Kitchen. All Rights Reserved. Pure Veg · Est. 2020 · Kandivali East, Mumbai</p>
+      <div class="footer-platforms">
+        <span class="fp">Swiggy</span>
+        <span class="fp">Zomato</span>
+        <span class="fp">WhatsApp</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- CART OVERLAY + PANEL -->
+<div id="cart-overlay" onclick="closeCart()"></div>
+<div id="cart-panel">
+  <div class="cart-head">
+    <h3>🛒 Your Cart</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cart-body">
+    <div class="cart-empty-state">
+      <div class="cart-empty-icon">🛒</div>
+      <p>Your cart is empty.<br>Add something delicious!</p>
+    </div>
+  </div>
+  <div class="cart-foot" id="cart-foot" style="display:none">
+    <div class="coupon-row">
+      <input type="text" placeholder="Coupon code…" id="coupon-in">
+      <button class="coupon-apply" onclick="applyCoupon()">Apply</button>
+    </div>
+    <div class="cline"><span>Subtotal</span><span id="cf-sub">₹0</span></div>
+    <div class="cline"><span>Delivery</span><span id="cf-del">₹30</span></div>
+    <div class="cline"><span>GST (5%)</span><span id="cf-tax">₹0</span></div>
+    <div class="cline" style="color:var(--orange)"><span>Discount</span><span id="cf-disc">–₹0</span></div>
+    <div class="cline total"><span>Total</span><span id="cf-total">₹0</span></div>
+    <button class="checkout-btn" onclick="checkout()">Place Order →</button>
+  </div>
+</div>
+
+<!-- WHATSAPP -->
+<a class="wa-float" href="https://wa.me/919082587359?text=Hi! I'd like to order from Aadu's Kitchen" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span>Order on WhatsApp</span>
+</a>
+
+<div id="toast"></div>
+
+<script>
+/* ═══════════ DATA ═══════════ */
+const DISHES = [
+  {id:1,cat:'soup',name:'Manchow Soup',desc:'Classic hot and sour soup with crispy fried noodles on top',price:110,oldPrice:null,rating:4.5,count:89,best:true,img:'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=75'},
+  {id:2,cat:'soup',name:'Manchurian Soup',desc:'Soft manchurian balls simmered in tangy spiced broth',price:120,oldPrice:140,rating:4.3,count:54,best:false,img:'https://images.unsplash.com/photo-1547592180-85f173990554?w=500&q=75'},
+  {id:3,cat:'soup',name:'Royal Soup',desc:'Clear vegetable broth with tofu and seasonal greens',price:120,oldPrice:null,rating:4.2,count:38,best:false,img:'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=500&q=75'},
+  {id:4,cat:'soup',name:'Noodles Soup',desc:'Rice noodles in light aromatic vegetable stock',price:130,oldPrice:null,rating:4.1,count:32,best:false,img:'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500&q=75'},
+  {id:5,cat:'starter',name:'Veg Crispy',desc:'Lightly battered mixed vegetables tossed in chilli sauce',price:160,oldPrice:180,rating:4.7,count:120,best:true,img:'https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500&q=75'},
+  {id:6,cat:'starter',name:'Paneer Chilly',desc:'Tender paneer cubes wok-tossed in bold chilli soy gravy',price:200,oldPrice:220,rating:4.8,count:198,best:true,img:'https://images.unsplash.com/photo-1625398407796-82916b66dbe2?w=500&q=75'},
+  {id:7,cat:'starter',name:'Veg Manchurian',desc:'Manchurian balls in rich dark soy chilli sauce',price:160,oldPrice:null,rating:4.5,count:87,best:false,img:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&q=75'},
+  {id:8,cat:'starter',name:'Oil Fry Lollipop',desc:'Crispy golden mushroom lollipops with dipping sauce',price:180,oldPrice:200,rating:4.6,count:94,best:false,img:'https://images.unsplash.com/photo-1574484284002-952d92456975?w=500&q=75'},
+  {id:9,cat:'rice',name:'Schezwan Fried Rice',desc:'Spicy Sichuan sauce tossed with jasmine rice & vegetables',price:180,oldPrice:200,rating:4.9,count:320,best:true,img:'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&q=75'},
+  {id:10,cat:'rice',name:'Triple Fried Rice',desc:'Mushroom, tofu and garden vegetables stir-fried rice',price:200,oldPrice:220,rating:4.7,count:145,best:false,img:'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=500&q=75'},
+  {id:11,cat:'rice',name:'Burnt Garlic Rice',desc:'Aromatic charred garlic fried rice with spring onion',price:190,oldPrice:null,rating:4.6,count:110,best:false,img:'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=500&q=75'},
+  {id:12,cat:'noodles',name:'Schezwan Noodles',desc:'Wok-tossed noodles in bold Sichuan chilli paste',price:170,oldPrice:190,rating:4.8,count:210,best:true,img:'https://images.unsplash.com/photo-1583032015879-e5022cb87c3b?w=500&q=75'},
+  {id:13,cat:'noodles',name:'Hakka Noodles',desc:'Classic stir-fried Hakka noodles with crisp vegetables',price:160,oldPrice:null,rating:4.5,count:135,best:false,img:'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=500&q=75'},
+  {id:14,cat:'noodles',name:'American Chopsuey',desc:'Crispy noodles topped with tangy American-style sauce',price:190,oldPrice:210,rating:4.7,count:98,best:false,img:'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500&q=75'},
+  {id:15,cat:'sizzler',name:'Thai Green Sizzler',desc:'Thai green curry vegetables on hot iron sizzle plate',price:260,oldPrice:280,rating:4.8,count:76,best:true,img:'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=500&q=75'},
+  {id:16,cat:'sizzler',name:'Schezwan Sizzler',desc:'Fiery Sichuan stir-fry on a smoking iron plate',price:270,oldPrice:290,rating:4.9,count:88,best:true,img:'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&q=75'},
+  {id:17,cat:'sizzler',name:'Black Pepper Sizzler',desc:'Crispy vegetables in robust black pepper sauce',price:250,oldPrice:270,rating:4.6,count:62,best:false,img:'https://images.unsplash.com/photo-1604909052743-94e838986d24?w=500&q=75'},
+  {id:18,cat:'combo',name:'Rice + Noodles Combo',desc:'Any fried rice + any noodles — best value on menu',price:249,oldPrice:320,rating:4.9,count:287,best:true,img:'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&q=75'},
+  {id:19,cat:'combo',name:'Soup + Starter Combo',desc:'Any soup + any starter at a combo price',price:220,oldPrice:280,rating:4.7,count:134,best:false,img:'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&q=75'},
+];
+
+const REVIEWS = [
+  {name:'Priya Shah',init:'PS',stars:5,text:'The Schezwan Fried Rice is incredible. Ordered 10 times this month and it keeps getting better. Always arrives in under 30 minutes!',dish:'Schezwan Fried Rice',platform:'Swiggy'},
+  {name:'Rahul Mehta',init:'RM',stars:5,text:'Best Chinese in Kandivali, no contest. The Thai Sizzler arrived piping hot. Generous portions and great value for money.',dish:'Thai Green Sizzler',platform:'Zomato'},
+  {name:'Sneha Kapoor',init:'SK',stars:4,text:'Paneer Chilly is perfectly spiced. Packaging was neat, nothing spilled. Ordering again this weekend!',dish:'Paneer Chilly',platform:'Swiggy'},
+  {name:'Amit Patel',init:'AP',stars:5,text:'Rice + Noodles combo is unbeatable. Both dishes have huge portions. The best deal in the area, hands down.',dish:'Rice + Noodles Combo',platform:'Zomato'},
+  {name:'Neha Desai',init:'ND',stars:4,text:'Manchow soup is perfect for rainy evenings. The crispy noodles on top add such a lovely texture. Will reorder.',dish:'Manchow Soup',platform:'Google'},
+  {name:'Kiran Thakur',init:'KT',stars:5,text:'Schezwan Sizzler is extraordinary. The smoke, the taste — everything is on point. Aadu\'s is our family go-to.',dish:'Schezwan Sizzler',platform:'Swiggy'},
+  {name:'Divya Nair',init:'DN',stars:5,text:'Delivery was 25 minutes flat on a Friday night. Food was piping hot. Outstanding service and quality!',dish:'Schezwan Noodles',platform:'Zomato'},
+  {name:'Rohan Joshi',init:'RJ',stars:5,text:'Burnt Garlic Rice is addictive. The aroma is incredible. Now my weekly staple from Aadu\'s Kitchen.',dish:'Burnt Garlic Rice',platform:'Google'},
+];
+
+const GALLERY = [
+  {src:'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&q=80',label:'Schezwan Fried Rice'},
+  {src:'https://images.unsplash.com/photo-1625398407796-82916b66dbe2?w=600&q=80',label:'Paneer Chilly'},
+  {src:'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&q=80',label:'Manchow Soup'},
+  {src:'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&q=80',label:'Schezwan Sizzler'},
+  {src:'https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600&q=80',label:'Veg Crispy'},
+  {src:'https://images.unsplash.com/photo-1583032015879-e5022cb87c3b?w=600&q=80',label:'Hakka Noodles'},
+  {src:'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&q=80',label:'Triple Fried Rice'},
+  {src:'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=600&q=80',label:'Thai Green Sizzler'},
+  {src:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80',label:'Veg Manchurian'},
+];
+
+/* ═══════════ STATE ═══════════ */
+const cart = {};
+let discount = 0;
+let activeCat = 'all';
+let searchQ = '';
+
+/* ═══════════ HEADER SCROLL ═══════════ */
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 60);
+  // active nav
+  const y = window.scrollY + 80;
+  ['home','popular','menu','offers','delivery','gallery','reviews','about','contact'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (y >= el.offsetTop && y < el.offsetTop + el.offsetHeight) {
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, {passive:true});
+
+/* ═══════════ MOBILE NAV ═══════════ */
+function openMobileNav(){document.getElementById('mobile-nav').classList.add('open');document.body.style.overflow='hidden'}
+function closeMobileNav(){document.getElementById('mobile-nav').classList.remove('open');document.body.style.overflow=''}
+
+/* ═══════════ POPULAR DISHES ═══════════ */
+function buildDishes(){
+  const top = DISHES.filter(d => d.best).slice(0, 6);
+  const stars = n => '★'.repeat(n) + '☆'.repeat(5-n);
+  document.getElementById('dishes-grid').innerHTML = top.map((d,i) => `
+    <div class="dish-card reveal" style="transition-delay:${i*.1}s">
+      <div class="veg-mark"><div class="veg-dot"></div></div>
+      ${d.best ? '<div class="dish-badge">Bestseller</div>' : ''}
+      <div class="dish-img-wrap">
+        <div class="dish-dashed-ring"></div>
+        <img class="dish-img" src="${d.img}" alt="${d.name}" loading="lazy">
+      </div>
+      <div class="dish-cat">Aadu's Kitchen</div>
+      <div class="dish-name">${d.name}</div>
+      <div class="dish-desc">${d.desc}</div>
+      <div class="dish-rating">
+        <span class="stars">${stars(Math.round(d.rating))}</span>
+        <span>(${d.count})</span>
+      </div>
+      <div class="dish-footer">
+        <div class="dish-price">${d.oldPrice ? `<small>₹${d.oldPrice}</small>` : ''}₹${d.price}</div>
+        <div id="dctrl-${d.id}">
+          <button class="dish-order-btn" onclick="addById(${d.id})">Order Now <span class="arrow">›</span></button>
+        </div>
+      </div>
+    </div>`).join('');
+  initReveal();
+}
+
+/* ═══════════ MENU ═══════════ */
+function renderMenu(){
+  let items = DISHES.filter(d => activeCat === 'all' || d.cat === activeCat);
+  if (searchQ) items = items.filter(d => d.name.toLowerCase().includes(searchQ) || d.desc.toLowerCase().includes(searchQ));
+  const starEl = n => ['★','★','★','★','★'].map((s,i) => `<span class="s" style="color:${i<Math.round(n)?'var(--orange)':'#DDD'}">${s}</span>`).join('');
+  document.getElementById('menu-grid').innerHTML = items.map((d,i) => {
+    const inCart = cart[d.id];
+    const ctrl = inCart
+      ? `<div class="qty-ctrl"><button onclick="chQty(${d.id},-1)">−</button><span class="qty-num">${inCart.qty}</span><button onclick="chQty(${d.id},1)">+</button></div>`
+      : `<button class="menu-add" onclick="addById(${d.id})">+</button>`;
+    return `<div class="menu-card reveal" style="transition-delay:${(i%6)*.07}s">
+      <div class="menu-img-wrap">
+        <img class="menu-img" src="${d.img}" alt="${d.name}" loading="lazy">
+        <div class="menu-veg"><div class="menu-veg-dot"></div></div>
+      </div>
+      <div class="menu-info">
+        <div class="menu-cat">${d.cat.charAt(0).toUpperCase()+d.cat.slice(1)}</div>
+        <div class="menu-name">${d.name}</div>
+        <div class="menu-stars">${starEl(d.rating)}<span style="margin-left:4px">(${d.count})</span></div>
+        <div class="menu-desc">${d.desc}</div>
+        <div class="menu-footer">
+          <div class="menu-price">${d.oldPrice ? `<small>₹${d.oldPrice}</small>` : ''}₹${d.price}</div>
+          <div id="mctrl-${d.id}">${ctrl}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('') || '<p style="color:var(--muted);padding:40px 0;text-align:center;grid-column:1/-1;font-weight:600">No dishes found. Try a different search.</p>';
+  initReveal();
+}
+function filterCat(cat, btn){
+  activeCat = cat;
+  document.querySelectorAll('.menu-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMenu();
+}
+function handleSearch(v){ searchQ = v.toLowerCase(); renderMenu(); }
+
+/* ═══════════ CART ═══════════ */
+function addById(id){
+  const d = DISHES.find(x => x.id === id);
+  if (!d) return;
+  cart[id] ? cart[id].qty++ : (cart[id] = {...d, qty:1});
+  updateAll();
+  updateDishCtrl(id);
+  updateMenuCtrl(id);
+  toast(`${d.name} added to cart 🛒`);
+}
+function chQty(id, delta){
+  if (!cart[id]) return;
+  cart[id].qty += delta;
+  if (cart[id].qty <= 0) {
+    delete cart[id];
+    updateDishCtrl(id, true);
+    updateMenuCtrl(id, true);
+  } else {
+    updateMenuCtrl(id);
+  }
+  updateAll();
+}
+function updateDishCtrl(id, remove){
+  const el = document.getElementById('dctrl-' + id);
+  if (!el) return;
+  if (remove) {
+    el.innerHTML = `<button class="dish-order-btn" onclick="addById(${id})">Order Now <span class="arrow">›</span></button>`;
+  } else {
+    const q = cart[id]?.qty || 1;
+    el.innerHTML = `<div class="qty-ctrl"><button onclick="chQty(${id},-1)">−</button><span class="qty-num">${q}</span><button onclick="chQty(${id},1)">+</button></div>`;
+  }
+}
+function updateMenuCtrl(id, remove){
+  const el = document.getElementById('mctrl-' + id);
+  if (!el) return;
+  if (remove) {
+    el.innerHTML = `<button class="menu-add" onclick="addById(${id})">+</button>`;
+  } else {
+    const q = cart[id]?.qty || 1;
+    el.innerHTML = `<div class="qty-ctrl"><button onclick="chQty(${id},-1)">−</button><span class="qty-num">${q}</span><button onclick="chQty(${id},1)">+</button></div>`;
+  }
+}
+function updateAll(){
+  const items = Object.values(cart);
+  const total_qty = items.reduce((s,i) => s+i.qty, 0);
+  document.getElementById('cart-count').textContent = total_qty;
+  const body = document.getElementById('cart-body');
+  const foot = document.getElementById('cart-foot');
+  if (!items.length) {
+    body.innerHTML = `<div class="cart-empty-state"><div class="cart-empty-icon">🛒</div><p>Your cart is empty.<br>Add something delicious!</p></div>`;
+    foot.style.display = 'none'; return;
+  }
+  body.innerHTML = items.map(i => `
+    <div class="cart-item">
+      <img class="ci-img" src="${i.img}" alt="${i.name}" loading="lazy">
+      <div class="ci-info">
+        <div class="ci-name">${i.name}</div>
+        <div class="ci-price">₹${i.price} × ${i.qty} = ₹${i.price * i.qty}</div>
+      </div>
+      <div class="qty-ctrl" style="gap:3px">
+        <button style="width:26px;height:26px;font-size:15px" onclick="chQty(${i.id},-1)">−</button>
+        <span class="qty-num">${i.qty}</span>
+        <button style="width:26px;height:26px;font-size:15px" onclick="chQty(${i.id},1)">+</button>
+      </div>
+    </div>`).join('');
+  foot.style.display = 'block';
+  const sub = items.reduce((s,i) => s+i.price*i.qty, 0);
+  const tax = Math.round(sub*.05);
+  const del = sub >= 299 ? 0 : 30;
+  const total = Math.max(0, sub + tax + del - discount);
+  document.getElementById('cf-sub').textContent = '₹'+sub;
+  document.getElementById('cf-tax').textContent = '₹'+tax;
+  document.getElementById('cf-del').textContent = del===0 ? 'FREE' : '₹'+del;
+  document.getElementById('cf-disc').textContent = '–₹'+discount;
+  document.getElementById('cf-total').textContent = '₹'+total;
+}
+function openCart(){document.getElementById('cart-panel').classList.add('open');document.getElementById('cart-overlay').style.display='block'}
+function closeCart(){document.getElementById('cart-panel').classList.remove('open');document.getElementById('cart-overlay').style.display='none'}
+function applyCoupon(){
+  const code = document.getElementById('coupon-in').value.trim().toUpperCase();
+  const sub = Object.values(cart).reduce((s,i)=>s+i.price*i.qty,0);
+  if (code==='AADU20'){discount=Math.round(sub*.2);toast('20% discount applied! 🎉')}
+  else if(code==='FREEDEL'){discount=30;toast('Free delivery applied! 🚴')}
+  else if(code==='COMBO249'){discount=50;toast('Combo discount applied! 🍜')}
+  else{toast('Invalid code. Try AADU20, FREEDEL, or COMBO249');return}
+  updateAll();
+}
+function checkout(){toast('Order placed! WhatsApp confirmation coming shortly. 🎉');closeCart()}
+
+/* ═══════════ OFFERS ═══════════ */
+function copyCode(code){
+  navigator.clipboard.writeText(code).catch(()=>{});
+  toast(`"${code}" copied to clipboard! 📋`);
+}
+
+/* ═══════════ GALLERY ═══════════ */
+function buildGallery(){
+  document.getElementById('gallery-grid').innerHTML = GALLERY.map(g => `
+    <div class="gallery-item">
+      <img src="${g.src}" alt="${g.label}" loading="lazy">
+      <div class="gallery-overlay"><div class="gallery-label">${g.label}</div></div>
+    </div>`).join('');
+}
+
+/* ═══════════ REVIEWS ═══════════ */
+function buildReviews(){
+  const stars = n => '★'.repeat(n)+'☆'.repeat(5-n);
+  const cards = [...REVIEWS, ...REVIEWS];
+  document.getElementById('reviews-track').innerHTML = cards.map(r => `
+    <div class="rev-card">
+      <div class="rev-stars">${r.stars >= 1?'<span>★</span>':'<span>☆</span>'}${r.stars >= 2?'<span>★</span>':'<span>☆</span>'}${r.stars >= 3?'<span>★</span>':'<span>☆</span>'}${r.stars >= 4?'<span>★</span>':'<span>☆</span>'}${r.stars >= 5?'<span>★</span>':'<span>☆</span>'}</div>
+      <div class="rev-text">"${r.text}"</div>
+      <div class="rev-author">
+        <div class="rev-avatar">${r.init}</div>
+        <div><div class="rev-name">${r.name}</div><div class="rev-dish">${r.dish} · ${r.platform}</div></div>
+      </div>
+    </div>`).join('');
+}
+
+/* ═══════════ DELIVERY CHECKER ═══════════ */
+const DEL_DB = {
+  '400101':{status:'ok',name:'Kandivali East',time:'20–25 min',fee:'Free above ₹299',min:'₹150'},
+  '400067':{status:'ok',name:'Kandivali West',time:'25–30 min',fee:'₹30',min:'₹199'},
+  '400092':{status:'busy',name:'Borivali East',time:'35–45 min',fee:'₹40',min:'₹249'},
+  '400066':{status:'ok',name:'Borivali West',time:'40–50 min',fee:'₹50',min:'₹299'},
+  'thakur village':{status:'ok',name:'Thakur Village',time:'15–20 min',fee:'Free above ₹199',min:'₹149'},
+  'lokhandwala':{status:'busy',name:'Lokhandwala',time:'40–55 min',fee:'₹60',min:'₹349'},
+  'mahavir nagar':{status:'ok',name:'Mahavir Nagar',time:'25–35 min',fee:'₹30',min:'₹199'},
+  'borivali':{status:'busy',name:'Borivali',time:'35–45 min',fee:'₹40',min:'₹249'},
+};
+function fillDel(v){document.getElementById('del-input').value=v;checkDel()}
+function checkDel(){
+  const q = document.getElementById('del-input').value.trim().toLowerCase();
+  if(!q){toast('Enter a pincode or area name');return}
+  const zone = DEL_DB[q] || DEL_DB[Object.keys(DEL_DB).find(k=>k.includes(q)||q.includes(k))||''];
+  const el = document.getElementById('del-result');
+  el.style.display='block';
+  if(!zone){
+    el.className='del-result no';
+    el.innerHTML=`<div class="dr-head"><span style="font-size:22px">❌</span><div><div class="dr-head-title">Not Available Yet</div><div class="dr-head-sub">We're expanding soon! Order via WhatsApp.</div></div></div>`;
+    return;
+  }
+  el.className=`del-result ${zone.status}`;
+  const icon = zone.status==='ok'?'✅':'⏳';
+  const label = zone.status==='ok'?'Delivery Available':'Available (Currently Busy)';
+  el.innerHTML=`
+    <div class="dr-head">
+      <span style="font-size:22px">${icon}</span>
+      <div><div class="dr-head-title" style="color:${zone.status==='ok'?'#22C55E':'var(--orange)'}">${label} — ${zone.name}</div><div class="dr-head-sub">Here are the details for your area</div></div>
+    </div>
+    <div class="dr-grid">
+      <div class="dr-item"><strong>${zone.time}</strong><span>Est. Time</span></div>
+      <div class="dr-item"><strong>${zone.fee}</strong><span>Delivery Fee</span></div>
+      <div class="dr-item"><strong>${zone.min}</strong><span>Min Order</span></div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+      <a href="#menu" class="btn-orange" style="font-size:13px;padding:10px 22px">Order Now →</a>
+      <a href="https://wa.me/9768900193" target="_blank" style="font-size:13px;font-weight:700;color:#22C55E;border:1.5px solid #22C55E;border-radius:50px;padding:10px 22px;display:flex;align-items:center;gap:6px">💬 WhatsApp Order</a>
+    </div>`;
+}
+
+/* ═══════════ ABOUT COUNTER ═══════════ */
+function animCount(el, to, suffix, dur=1400){
+  let start=null;
+  function step(ts){
+    if(!start) start=ts;
+    const p=Math.min((ts-start)/dur,1);
+    const ease=1-Math.pow(1-p,3);
+    const val=Math.round(to*ease);
+    el.textContent=(to>=1000?val.toLocaleString('en-IN'):val)+suffix;
+    if(p<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+/* ═══════════ SCROLL REVEAL ═══════════ */
+function initReveal(){
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        // counters
+        if(e.target.hasAttribute('data-target')){
+          animCount(e.target,+e.target.dataset.target,e.target.dataset.suffix);
+        }
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal:not(.visible),.reveal-left:not(.visible),.reveal-right:not(.visible),[data-target]').forEach(el=>obs.observe(el));
+}
+
+/* ═══════════ TOAST ═══════════ */
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._to);
+  t._to=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+/* ═══════════ HERO PARALLAX ═══════════ */
+document.addEventListener('mousemove', e => {
+  const cx=window.innerWidth/2, cy=window.innerHeight/2;
+  const dx=(e.clientX-cx)/cx, dy=(e.clientY-cy)/cy;
+  const img=document.querySelector('.hero-dish-img');
+  if(img) img.style.marginLeft=(dx*15)+'px';
+});
+
+/* ═══════════ INIT ═══════════ */
+buildDishes();
+renderMenu();
+buildGallery();
+buildReviews();
+initReveal();
+</script>
+</body>
+</html>
