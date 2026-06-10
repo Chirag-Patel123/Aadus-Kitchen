@@ -12,9 +12,3 @@ window.supabaseClient =
     SUPABASE_KEY
   );
 
-// Test connection
-const { data, error } = await window.supabase
-  .from('menu_categories').select('name').limit(1);
-if (data) console.log('✅ Supabase connected! Categories:', data);
-if (error) console.error('❌ Supabase error:', error);
-
