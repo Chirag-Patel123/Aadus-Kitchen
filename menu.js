@@ -1,8 +1,6 @@
 // ===================== SHARED DATA =====================
 let menuItems = [];
 
-let specials = [];
-
 let ordersData = [
   {id:'AK-001',customer:'Rahul Sharma',phone:'+91 98765 43210',items:'Schezwan Fried Rice × 2, Veg Crispy × 1',amount:440,address:'204, Green Park, Kandivali East, Mumbai',status:'pending',time:'2:30 PM',date:'Today'},
   {id:'AK-002',customer:'Priya Mehta',phone:'+91 87654 32109',items:'Triple Fried Rice × 1, Chowmein × 1',amount:280,address:'B-12, Thakur Village, Kandivali East',status:'preparing',time:'2:15 PM',date:'Today'},
@@ -428,6 +426,5 @@ function inrHtml(amount,opts={}){
 
 // ===================== INIT =====================
 loadMenuItems();
-renderSpecials();
 observeReveal();
 if(typeof lucide!=='undefined'){lucide.createIcons();}
