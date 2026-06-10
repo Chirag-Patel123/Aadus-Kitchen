@@ -1,5 +1,8 @@
 // ===================== SHARED DATA =====================
 let menuItems = [];
+
+let allMenuItems = [];
+
 let ordersData = [
   {id:'AK-001',customer:'Rahul Sharma',phone:'+91 98765 43210',items:'Schezwan Fried Rice × 2, Veg Crispy × 1',amount:440,address:'204, Green Park, Kandivali East, Mumbai',status:'pending',time:'2:30 PM',date:'Today'},
   {id:'AK-002',customer:'Priya Mehta',phone:'+91 87654 32109',items:'Triple Fried Rice × 1, Chowmein × 1',amount:280,address:'B-12, Thakur Village, Kandivali East',status:'preparing',time:'2:15 PM',date:'Today'},
@@ -94,19 +97,52 @@ async function loadMenuItems() {
   const { data, error } =
     await window.supabaseClient
       .from('menu_items')
-      .select('*')
+      .select(`
+        *,
+        menu_categories(name)
+      `)
       .eq('is_available', true);
 
-  if(error){
+  if (error) {
     console.error(error);
     return;
   }
 
-  console.log(data);
+  allMenuItems = data.map(item => ({
+    id: item.id,
+    name: item.name,
+    img: item.image_url || 'placeholder.jpg',
+    desc: item.description || '',
+    category: item.menu_categories?.name || 'uncategorized',
+    type: item.food_type || 'veg',
+    rating: item.rating || 4.5,
+    reviews: item.reviews || 0,
+    price: item.discounted_price || item.price,
+    status: 'active'
+  }));
 
-  menuItems = data;
+  menuItems = allMenuItems;
 
   renderMenu();
+}
+  function renderMenu(){ 
+    
+  // Build HTML for each item
+    
+  const menuContainer = document.getElementById('menuGrid');
+  menuContainer.innerHTML = menuItems.map(item => `
+    <div class="food-card">
+      <img src="${item.image_url || 'placeholder.jpg'}" alt="${item.name}">
+      <h3>${item.name}</h3>
+      <p>${item.description || ''}</p>
+      <span class="price">₹${item.discounted_price || item.price}</span>
+      <button onclick="addToCart('${item.id}', '${item.name}')">
+        Add to Cart
+      </button>
+    </div>
+  `).join('');
+  }
+
 }
 
 
@@ -152,13 +188,35 @@ function renderSpecials(){
   observeReveal();
   if(typeof lucide!=='undefined')lucide.createIcons();
 }
-function filterMenu(cat,btn){
-  currentFilter=cat;
-  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  const grid=document.getElementById('menuGrid');
-  grid.style.opacity='0';grid.style.transform='translateY(20px)';
-  setTimeout(()=>{renderMenu(cat);grid.style.transition='all .4s ease';grid.style.opacity='1';grid.style.transform='translateY(0)';},200);
+function filterMenu(cat, btn) {
+  currentFilter = cat;
+  document
+    .querySelectorAll('.cat-tab')
+    .forEach(t => t.classList.remove('active'));
+
+  if(btn){
+    btn.classList.add('active');
+  }
+  if(cat === 'all'){
+
+    menuItems = allMenuItems;
+  } else {
+    menuItems = allMenuItems.filter(item =>
+      item.category.toLowerCase() === cat.toLowerCase()
+    );
+  }
+  const grid =
+    document.getElementById('menuGrid');
+  grid.style.opacity='0';
+  grid.style.transform='translateY(20px)';
+
+  setTimeout(() => {
+    renderMenu();
+    grid.style.transition='all .4s ease';
+    grid.style.opacity='1';
+    grid.style.transform='translateY(0)';
+  }, 200);
+  
 }
 
 // ===================== USER AUTH / PROFILE =====================
