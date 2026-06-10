@@ -1,5 +1,5 @@
 // ===================== SHARED DATA =====================
-
+let menuItems = [];
 let ordersData = [
   {id:'AK-001',customer:'Rahul Sharma',phone:'+91 98765 43210',items:'Schezwan Fried Rice × 2, Veg Crispy × 1',amount:440,address:'204, Green Park, Kandivali East, Mumbai',status:'pending',time:'2:30 PM',date:'Today'},
   {id:'AK-002',customer:'Priya Mehta',phone:'+91 87654 32109',items:'Triple Fried Rice × 1, Chowmein × 1',amount:280,address:'B-12, Thakur Village, Kandivali East',status:'preparing',time:'2:15 PM',date:'Today'},
@@ -86,7 +86,80 @@ function updateCart(){
 function openCart(){ document.getElementById('cartSidebar').classList.add('open'); document.getElementById('cartOverlay').classList.add('open'); }
 function closeCart(){ document.getElementById('cartSidebar').classList.remove('open'); document.getElementById('cartOverlay').classList.remove('open'); }
 
+
+// =================== LOAD FROM SUPABASE ================
+
+async function loadMenuItems() {
+
+  const { data, error } =
+    await window.supabaseClient
+      .from('menu_items')
+      .select('*')
+      .eq('is_available', true);
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  console.log(data);
+
+  menuItems = data;
+
+  renderMenu();
+}
+
+
 // ===================== MENU RENDER =====================
+let currentFilter = 'all';
+function renderMenu(cat){
+  const f = cat||currentFilter;
+  const filtered = f==='all' ? menuItems.filter(i=>i.status==='active') : menuItems.filter(i=>i.category===f&&i.status==='active');
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = filtered.map(item=>`
+    <div class="food-card">
+      <div class="food-card-img">
+        <img src="${item.img}" alt="${item.name}" loading="lazy">
+        <div class="veg-badge ${item.type}"></div>
+        <div class="food-tag">${capitalize(item.category)}</div>
+      </div>
+      <div class="food-card-body">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.3rem;">
+          <div class="food-name">${item.name}</div>
+          <div class="food-rating"><span class="stars-row"><span class="ico"><i data-lucide="star"></i></span></span>${item.rating} <span style="color:var(--gray);">(${item.reviews})</span></div>
+        </div>
+        <div class="food-desc">${item.desc}</div>
+        <div class="food-footer">
+          <div class="food-price">${inrHtml(item.price)}<br><small>per plate</small></div>
+          <button class="add-btn" onclick="addToCart(${item.id})">+ Add</button>
+        </div>
+      </div>
+    </div>`).join('');
+  observeReveal();
+  if(typeof lucide!=='undefined')lucide.createIcons();
+}
+function renderSpecials(){
+  const grid = document.getElementById('specialGrid');
+  grid.innerHTML = specials.map((s,i)=>`
+    <div class="special-item reveal" style="transition-delay:${i*.1}s">
+      <div class="special-img-wrap"><img src="${s.img}" alt="${s.name}" loading="lazy"></div>
+      <div class="special-cuisine">${s.cuisine}</div>
+      <div class="special-name">${s.name}</div>
+      <div class="special-rating"><span class="stars-row"><span class="ico"><i data-lucide="star"></i></span><span class="ico"><i data-lucide="star"></i></span><span class="ico"><i data-lucide="star"></i></span><span class="ico"><i data-lucide="star"></i></span><span class="ico"><i data-lucide="star"></i></span></span> <span style="color:var(--gray);">(${s.reviews})</span></div>
+      <div class="special-price">${inrHtml(s.price)}</div>
+      <button class="buy-btn" onclick="addToCartByName('${s.name}')">Buy Now</button>
+    </div>`).join('');
+  observeReveal();
+  if(typeof lucide!=='undefined')lucide.createIcons();
+}
+function filterMenu(cat,btn){
+  currentFilter=cat;
+  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const grid=document.getElementById('menuGrid');
+  grid.style.opacity='0';grid.style.transform='translateY(20px)';
+  setTimeout(()=>{renderMenu(cat);grid.style.transition='all .4s ease';grid.style.opacity='1';grid.style.transform='translateY(0)';},200);
+}
 
 // ===================== USER AUTH / PROFILE =====================
 let currentUser = null;  // { phone, firstName, lastName, email, dob, addresses:[], myOrders:[] }
@@ -409,4 +482,9 @@ function inrHtml(amount,opts={}){
 
 // ===================== INIT =====================
 observeReveal();
-if(typeof lucide!=='undefined'){lucide.createIcons();}
+
+if(typeof lucide!=='undefined'){
+  lucide.createIcons();
+}
+
+loadMenuItems();
