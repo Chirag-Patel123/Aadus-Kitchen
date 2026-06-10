@@ -1,22 +1,7 @@
 // ===================== SHARED DATA =====================
-let menuItems = [
-  {id:1,name:'Schezwan Fried Rice',category:'chinese',price:140,type:'veg',img:'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&q=70',rating:4.7,reviews:89,status:'active',desc:'Spicy Schezwan sauce with fresh veggies, tossed to perfection'},
-  {id:2,name:'Veg Crispy',category:'sichuan',price:160,type:'veg',img:'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&q=70',rating:4.5,reviews:65,status:'active',desc:'Crispy battered vegetables in aromatic Sichuan sauce'},
-  {id:3,name:'Triple Fried Rice',category:'chinese',price:160,type:'nonveg',img:'https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=400&q=70',rating:4.8,reviews:112,status:'active',desc:'Mix of egg, paneer and vegetables in fragrant fried rice'},
-  {id:4,name:'Oil Fry Lollipop',category:'sichuan',price:200,type:'nonveg',img:'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&q=70',rating:4.6,reviews:78,status:'active',desc:'Chicken lollipops in aromatic Chinese spices & sauces'},
-  {id:5,name:'Masala Papad',category:'starters',price:45,type:'veg',img:'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=400&q=70',rating:4.3,reviews:45,status:'active',desc:'Crispy papad loaded with fresh toppings and chutneys'},
-  {id:6,name:'Tomato Onion Capsicum Fry',category:'street',price:60,type:'veg',img:'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&q=70',rating:4.4,reviews:38,status:'active',desc:'Stir-fried veggies in spicy Chinese sauce'},
-  {id:7,name:'Veg Chowmein',category:'chinese',price:120,type:'veg',img:'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&q=70',rating:4.5,reviews:95,status:'active',desc:'Classic noodles with fresh seasonal vegetables'},
-  {id:8,name:'Khicha Papad',category:'starters',price:50,type:'veg',img:'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&q=70',rating:4.2,reviews:28,status:'active',desc:'Traditional khicha papad served hot and crispy'},
-];
+let menuItems = [];
 
-let specials = [
-  {name:'Schezwan Fried Rice',cuisine:'Chinese Special',price:140,reviews:89,img:'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300&q=70'},
-  {name:'Veg Crispy',cuisine:'Sichuan Special',price:160,reviews:65,img:'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300&q=70'},
-  {name:'Triple Fried Rice',cuisine:'Chef\'s Choice',price:160,reviews:112,img:'https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=300&q=70'},
-  {name:'Oil Fry Lollipop',cuisine:'Sichuan',price:200,reviews:78,img:'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=300&q=70'},
-  {name:'Veg Chowmein',cuisine:'Chinese',price:120,reviews:95,img:'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&q=70'},
-];
+let specials = [];
 
 let ordersData = [
   {id:'AK-001',customer:'Rahul Sharma',phone:'+91 98765 43210',items:'Schezwan Fried Rice × 2, Veg Crispy × 1',amount:440,address:'204, Green Park, Kandivali East, Mumbai',status:'pending',time:'2:30 PM',date:'Today'},
@@ -105,54 +90,21 @@ function openCart(){ document.getElementById('cartSidebar').classList.add('open'
 function closeCart(){ document.getElementById('cartSidebar').classList.remove('open'); document.getElementById('cartOverlay').classList.remove('open'); }
 
 // ===================== MENU RENDER =====================
-let currentFilter = 'all';
-function renderMenu(cat){
-  const f = cat||currentFilter;
-  const filtered = f==='all' ? menuItems.filter(i=>i.status==='active') : menuItems.filter(i=>i.category===f&&i.status==='active');
-  const grid = document.getElementById('menuGrid');
-  grid.innerHTML = filtered.map(item=>`
-    <div class="food-card">
-      <div class="food-card-img">
-        <img src="${item.img}" alt="${item.name}" loading="lazy">
-        <div class="veg-badge ${item.type}"></div>
-        <div class="food-tag">${capitalize(item.category)}</div>
-      </div>
-      <div class="food-card-body">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.3rem;">
-          <div class="food-name">${item.name}</div>
-          <div class="food-rating"><span class="stars-row"><span class="ico"><i data-lucide="star"></i></span></span>${item.rating} <span style="color:var(--gray);">(${item.reviews})</span></div>
-        </div>
-        <div class="food-desc">${item.desc}</div>
-        <div class="food-footer">
-          <div class="food-price">${inrHtml(item.price)}<br><small>per plate</small></div>
-          <button class="add-btn" onclick="addToCart(${item.id})">+ Add</button>
-        </div>
-      </div>
-    </div>`).join('');
-  observeReveal();
-  if(typeof lucide!=='undefined')lucide.createIcons();
-}
-function renderSpecials(){
-  const grid = document.getElementById('specialGrid');
-  grid.innerHTML = specials.map((s,i)=>`
-    <div class="special-item reveal" style="transition-delay:${i*.1}s">
-      <div class="special-img-wrap"><img src="${s.img}" alt="${s.name}" loading="lazy"></div>
-      <div class="special-cuisine">${s.cuisine}</div>
-      <div class="special-name">${s.name}</div>
-      <div class="special-rating"><span class="stars-row"><span class="ico"><i data-lucide="star"></i></span><span class="ico"><i data-lucide="star"></i></span><span class="ico"><i data-lucide="star"></i></span><span class="ico"><i data-lucide="star"></i></span><span class="ico"><i data-lucide="star"></i></span></span> <span style="color:var(--gray);">(${s.reviews})</span></div>
-      <div class="special-price">${inrHtml(s.price)}</div>
-      <button class="buy-btn" onclick="addToCartByName('${s.name}')">Buy Now</button>
-    </div>`).join('');
-  observeReveal();
-  if(typeof lucide!=='undefined')lucide.createIcons();
-}
-function filterMenu(cat,btn){
-  currentFilter=cat;
-  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  const grid=document.getElementById('menuGrid');
-  grid.style.opacity='0';grid.style.transform='translateY(20px)';
-  setTimeout(()=>{renderMenu(cat);grid.style.transition='all .4s ease';grid.style.opacity='1';grid.style.transform='translateY(0)';},200);
+async function loadMenuItems() {
+
+  const { data, error } =
+    await window.supabaseClient
+      .from('menu_items')
+      .select('*')
+      .eq('is_available', true);
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  menuItems = data;
+  
 }
 
 // ===================== USER AUTH / PROFILE =====================
@@ -475,7 +427,7 @@ function inrHtml(amount,opts={}){
 }
 
 // ===================== INIT =====================
-renderMenu();
+loadMenuItems();
 renderSpecials();
 observeReveal();
 if(typeof lucide!=='undefined'){lucide.createIcons();}
