@@ -1,5 +1,4 @@
 // ===================== SHARED DATA =====================
-let menuItems = [];
 
 let ordersData = [
   {id:'AK-001',customer:'Rahul Sharma',phone:'+91 98765 43210',items:'Schezwan Fried Rice × 2, Veg Crispy × 1',amount:440,address:'204, Green Park, Kandivali East, Mumbai',status:'pending',time:'2:30 PM',date:'Today'},
@@ -88,22 +87,6 @@ function openCart(){ document.getElementById('cartSidebar').classList.add('open'
 function closeCart(){ document.getElementById('cartSidebar').classList.remove('open'); document.getElementById('cartOverlay').classList.remove('open'); }
 
 // ===================== MENU RENDER =====================
-async function loadMenuItems() {
-
-  const { data, error } =
-    await window.supabaseClient
-      .from('menu_items')
-      .select('*')
-      .eq('is_available', true);
-
-  if(error){
-    console.error(error);
-    return;
-  }
-
-  menuItems = data;
-  
-}
 
 // ===================== USER AUTH / PROFILE =====================
 let currentUser = null;  // { phone, firstName, lastName, email, dob, addresses:[], myOrders:[] }
@@ -425,6 +408,5 @@ function inrHtml(amount,opts={}){
 }
 
 // ===================== INIT =====================
-loadMenuItems();
 observeReveal();
 if(typeof lucide!=='undefined'){lucide.createIcons();}
