@@ -506,5 +506,27 @@
 <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <script src="menu.js"></script>
 
+<!-- ================================================================
+     TEST CONNECTION
+================================================================ -->
+  
+<script>
+(async () => {
+
+  const { data, error } =
+    await window.supabaseClient
+      .from('menu_categories')
+      .select('name')
+      .limit(1);
+
+  if (error) {
+    console.error('❌ Supabase error:', error);
+  } else {
+    console.log('✅ Supabase connected!', data);
+  }
+
+})();
+</script>
+  
 </body>
 </html>
