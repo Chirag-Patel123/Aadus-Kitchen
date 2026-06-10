@@ -1,5 +1,7 @@
 // public/js/supabase.js
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 const SUPABASE_URL =
   'https://rmfhyfkiomvjvfrwdfxb.supabase.co';
 
