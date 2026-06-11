@@ -143,8 +143,6 @@ async function loadMenuItems() {
   `).join('');
   }
 
-}
-
 
 // ===================== MENU RENDER =====================
 let currentFilter = 'all';
