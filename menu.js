@@ -275,29 +275,28 @@ function openLogin(){
 function closeLogin(){ document.getElementById('loginModal').classList.remove('open'); }
 
 function resetLoginSteps(){
-  ['ls-step1','ls-step2','ls-step3','ls-step4'].forEach(id=>document.getElementById(id).classList.remove('active'));
-  document.getElementById('ls-step1').classList.add('active');
-  ['otp1','otp2','otp3','otp4'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('phoneInput').value='';
+
+  ['ls-step1','ls-step2','ls-step3','ls-step4']
+    .forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.classList.remove('active');
+    });
+
+  const step1 =
+    document.getElementById('ls-step1');
+
+  if(step1)
+    step1.classList.add('active');
+
 }
 
-function sendOTP(){
-  const phone = document.getElementById('phoneInput').value.trim();
-  if(phone.length!==10||!/^\d+$/.test(phone)){ showToast('Please enter a valid 10-digit number', 'alert-triangle'); return; }
-  document.getElementById('otpSubtext').textContent = `OTP sent to +91 ${phone}`;
-  document.getElementById('ls-step1').classList.remove('active');
-  document.getElementById('ls-step2').classList.add('active');
-  showToast('OTP sent! Use 1234 for demo', 'smartphone');
-}
-function otpMove(el,nextId){ if(el.value&&nextId) document.getElementById(nextId).focus(); }
-function verifyOTP(){
-  const otp = ['otp1','otp2','otp3','otp4'].map(id=>document.getElementById(id).value).join('');
-  if(otp!=='1234'){ showToast('Invalid OTP. Use 1234 for demo', 'x-circle'); return; }
-  const phone = '+91 '+document.getElementById('phoneInput').value;
   // Check if existing user
   const existing = customersData.find(c=>c.phone.replace(/\s/g,'')===phone.replace(/\s/g,''));
   if(existing){
     // Returning user — log in directly
+    const {
+  data: { user }
+} = await window.supabaseClient.auth.getUser();
     currentUser = {
       phone: existing.phone,
       firstName: existing.name.split(' ')[0],
@@ -369,7 +368,6 @@ document.addEventListener('click',e=>{
   const area=document.getElementById('userNavArea');
   if(area&&!area.contains(e.target)) document.getElementById('userDropdown').classList.remove('open');
 });
-function resendOTP(){ showToast('OTP resent!', 'smartphone'); }
 
 // ===================== MY ACCOUNT MODAL =====================
 function openAccount(tab){
