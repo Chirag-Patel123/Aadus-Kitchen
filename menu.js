@@ -132,7 +132,7 @@ async function loadMenuItems() {
   const menuContainer = document.getElementById('menuGrid');
   menuContainer.innerHTML = menuItems.map(item => `
     <div class="food-card">
-      <img src="${item.image_url || 'placeholder.jpg'}" alt="${item.name}">
+      <img src= "item.img || 'https://via.placeholder.com/400x300?text=Food+Image'" alt="${item.name}">
       <h3>${item.name}</h3>
       <p>${item.description || ''}</p>
       <span class="price">₹${item.discounted_price || item.price}</span>
@@ -160,7 +160,8 @@ function renderMenu(cat){
     menuItems.map(item => `
       <div class="food-card">
         <div class="food-card-img">
-          <img: item.image_url || 'https://via.placeholder.com/400x300?text=Food+Image'"
+          <img 
+            src= "item.img || 'https://via.placeholder.com/400x300?text=Food+Image'"
             alt="${item.name}"
             loading="lazy"
           >
@@ -192,7 +193,7 @@ function renderMenu(cat){
           </div>
 
           <div class="food-desc">
-            ${item.description}
+            ${item.desc}
           </div>
 
           <div class="food-footer">
