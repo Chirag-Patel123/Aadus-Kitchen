@@ -147,30 +147,78 @@ async function loadMenuItems() {
 // ===================== MENU RENDER =====================
 let currentFilter = 'all';
 function renderMenu(cat){
-  const f = cat||currentFilter;
-  const filtered = f==='all' ? menuItems.filter(i=>i.status==='active') : menuItems.filter(i=>i.category===f&&i.status==='active');
-  const grid = document.getElementById('menuGrid');
-  grid.innerHTML = filtered.map(item=>`
-    <div class="food-card">
-      <div class="food-card-img">
-        <img src="${item.img}" alt="${item.name}" loading="lazy">
-        <div class="veg-badge ${item.type}"></div>
-        <div class="food-tag">${capitalize(item.category)}</div>
-      </div>
-      <div class="food-card-body">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.3rem;">
-          <div class="food-name">${item.name}</div>
-          <div class="food-rating"><span class="stars-row"><span class="ico"><i data-lucide="star"></i></span></span>${item.rating} <span style="color:var(--gray);">(${item.reviews})</span></div>
+
+  const menuContainer =
+    document.getElementById('menuGrid');
+
+  if(!menuContainer){
+    console.error('menuGrid not found');
+    return;
+  }
+
+  menuContainer.innerHTML =
+    menuItems.map(item => `
+      <div class="food-card">
+        <div class="food-card-img">
+          <img
+            src="${item.img}"
+            alt="${item.name}"
+            loading="lazy"
+          >
+          <div class="veg-badge ${item.type}"></div>
+          <div class="food-tag">
+            ${capitalize(item.category)}
+          </div>
         </div>
-        <div class="food-desc">${item.desc}</div>
-        <div class="food-footer">
-          <div class="food-price">${inrHtml(item.price)}<br><small>per plate</small></div>
-          <button class="add-btn" onclick="addToCart(${item.id})">+ Add</button>
+
+        <div class="food-card-body">
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            margin-bottom:.3rem;
+          ">
+            <div class="food-name">
+              ${item.name}
+            </div>
+
+            <div class="food-rating">
+              ${item.rating}
+              <span style="color:var(--gray);">
+                (${item.reviews})
+              </span>
+            </div>
+
+          </div>
+
+          <div class="food-desc">
+            ${item.desc}
+          </div>
+
+          <div class="food-footer">
+
+            <div class="food-price">
+              ₹${item.price}
+            </div>
+
+            <button
+              class="add-btn"
+              onclick="addToCart('${item.id}')"
+            >
+              + Add
+            </button>
+
+          </div>
+
         </div>
+
       </div>
-    </div>`).join('');
-  observeReveal();
-  if(typeof lucide!=='undefined')lucide.createIcons();
+    `).join('');
+
+  if(typeof lucide !== 'undefined'){
+    lucide.createIcons();
+  }
 }
 function renderSpecials(){
   const grid = document.getElementById('specialGrid');
