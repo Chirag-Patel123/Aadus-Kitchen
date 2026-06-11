@@ -42,18 +42,18 @@ let couponHistory = [
 let cart = [];
 function addToCart(id){
   const item = menuItems.find(i => i.id===id);
-  const ex = cart.find(i => i.id===id);
+  const ex = cart.find(i => String(i.id) === String(id));
   if(ex) ex.qty++;
   else cart.push({...item,qty:1});
   updateCart();
   showToast(`${item.name} added to cart!`, 'utensils');
 }
 function addToCartByName(name){
-  const item = menuItems.find(i => i.name===name);
+  const item = menuItems.find(i => String(i.id) === String(id));
   if(item) addToCart(item.id);
 }
 function removeFromCart(id){
-  const idx = cart.findIndex(i => i.id===id);
+  const idx = cart.findIndex(i => String(i.id) === String(id));
   if(idx>-1){
     if(cart[idx].qty>1) cart[idx].qty--;
     else cart.splice(idx,1);
@@ -77,9 +77,9 @@ function updateCart(){
         <img class="cart-item-img" src="${i.img}" alt="${i.name}">
         <div class="cart-item-info"><div class="cart-item-name">${i.name}</div><div class="cart-item-price">${inrHtml(i.price*i.qty)}</div></div>
         <div class="cart-qty">
-          <button class="qty-btn" onclick="removeFromCart(${i.id})">−</button>
+          <button class="qty-btn" onclick="removeFromCart('${i.id}')">−</button>
           <span class="qty-num">${i.qty}</span>
-          <button class="qty-btn" onclick="addToCart(${i.id})">+</button>
+          <button class="qty-btn" onclick="addToCart('${i.id}')">+</button>
         </div>
       </div>`).join('');
     footer.style.display='block';
@@ -161,7 +161,7 @@ function renderMenu(cat){
       <div class="food-card">
         <div class="food-card-img">
           <img
-            src="${item.img}"
+            src="${item.image_url}"
             alt="${item.name}"
             loading="lazy"
           >
@@ -193,7 +193,7 @@ function renderMenu(cat){
           </div>
 
           <div class="food-desc">
-            ${item.desc}
+            ${item.description}
           </div>
 
           <div class="food-footer">
