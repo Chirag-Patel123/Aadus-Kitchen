@@ -286,38 +286,41 @@
     <button class="modal-close" onclick="closeLogin()" aria-label="Close"><span class="ico"><i data-lucide="x"></i></span></button>
     <div class="modal-logo">Aadu's <span>Kitchen</span></div>
 
-    <!-- Step 1: Phone -->
-    <div class="modal-step active" id="ls-step1">
-      <h2>Login / Sign Up</h2>
-      <p class="modal-sub">Enter your phone number to continue</p>
-      <div class="form-group-m">
-        <label class="form-label-m">Mobile Number</label>
-        <div class="phone-input-wrap">
-          <span class="phone-prefix">+91</span>
-          <input type="tel" class="phone-input" placeholder="Enter 10-digit number" id="phoneInput" maxlength="10">
-        </div>
-      </div>
-      <button class="submit-btn" onclick="sendOTP()">Send OTP →</button>
-      <p style="text-align:center;font-size:.75rem;color:var(--gray);margin-top:1rem;">By continuing, you agree to our Terms & Privacy Policy</p>
-    </div>
+    <!-- Step 1: email -->
 
-    <!-- Step 2: OTP -->
-    <div class="modal-step" id="ls-step2">
-      <h2>Enter OTP</h2>
-      <p class="modal-sub" id="otpSubtext">OTP sent to +91 XXXXXXXXXX</p>
-      <div class="form-group-m">
-        <label class="form-label-m">4-Digit OTP</label>
-        <div class="otp-inputs">
-          <input type="text" class="otp-input" maxlength="1" id="otp1" oninput="otpMove(this,'otp2')">
-          <input type="text" class="otp-input" maxlength="1" id="otp2" oninput="otpMove(this,'otp3')">
-          <input type="text" class="otp-input" maxlength="1" id="otp3" oninput="otpMove(this,'otp4')">
-          <input type="text" class="otp-input" maxlength="1" id="otp4" oninput="otpMove(this,null)">
-        </div>
-      </div>
-      <button class="submit-btn" onclick="verifyOTP()">Verify & Login →</button>
-      <p class="resend-otp">Didn't receive OTP? <span onclick="resendOTP()">Resend OTP</span></p>
-    </div>
+    <div id="authModal" class="auth-modal">
 
+  <div class="auth-card">
+
+    <h2>Aadus Kitchen</h2>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Enter Email">
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Enter Password">
+    <button onclick="signUp()">
+      Create Account
+    </button>
+
+    <button onclick="login()">
+      Login
+    </button>
+
+    <button onclick="logout()">
+      Logout
+    </button>
+
+    <p id="authMessage"></p>
+
+  </div>
+
+</div>
+   
     <!-- Step 3: New user profile setup -->
     <div class="modal-step" id="ls-step3">
       <h2>Complete Your Profile</h2>
