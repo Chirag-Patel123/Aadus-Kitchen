@@ -338,6 +338,35 @@ footer{background:#1A1A1A;color:#fff;padding:3rem 5% 1.5rem;}
 .modal-tab.active{background:#fff;color:var(--orange);box-shadow:0 2px 8px rgba(0,0,0,.08);}
 
 /* ============================================================
+   Email + password
+============================================================ */
+
+.auth-card{
+  width:350px;
+  margin:auto;
+  padding:20px;
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.auth-card input{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+
+.auth-card button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+
+/* ============================================================
    MY ACCOUNT MODAL (Profile / Orders / Addresses)
 ============================================================ */
 .account-modal{width:580px;}
