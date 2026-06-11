@@ -160,8 +160,7 @@ function renderMenu(cat){
     menuItems.map(item => `
       <div class="food-card">
         <div class="food-card-img">
-          <img
-            src="${item.image_url}"
+          <img: item.image_url || 'https://via.placeholder.com/400x300?text=Food+Image'"
             alt="${item.name}"
             loading="lazy"
           >
