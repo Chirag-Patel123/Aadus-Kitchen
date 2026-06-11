@@ -111,7 +111,7 @@ async function loadMenuItems() {
   allMenuItems = data.map(item => ({
     id: item.id,
     name: item.name,
-    img: item.image_url || 'placeholder.jpg',
+    img: item.image_url || 'https://via.placeholder.com/400x300?text=Food+Image',,
     desc: item.description || '',
     category: item.menu_categories?.name || 'uncategorized',
     type: item.food_type || 'veg',
