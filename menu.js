@@ -132,7 +132,7 @@ async function loadMenuItems() {
   const menuContainer = document.getElementById('menuGrid');
   menuContainer.innerHTML = menuItems.map(item => `
     <div class="food-card">
-      <img src= "item.img || 'https://via.placeholder.com/400x300?text=Food+Image'" alt="${item.name}">
+      <img src="${item.img}" alt="${item.name}">
       <h3>${item.name}</h3>
       <p>${item.description || ''}</p>
       <span class="price">₹${item.discounted_price || item.price}</span>
@@ -160,11 +160,10 @@ function renderMenu(cat){
     menuItems.map(item => `
       <div class="food-card">
         <div class="food-card-img">
-          <img 
-            src= "item.img || 'https://via.placeholder.com/400x300?text=Food+Image'"
-            alt="${item.name}"
-            loading="lazy"
-          >
+          <img
+          src="${item.img}"
+          alt="${item.name}"
+          loading="lazy">
           <div class="veg-badge ${item.type}"></div>
           <div class="food-tag">
             ${capitalize(item.category)}
